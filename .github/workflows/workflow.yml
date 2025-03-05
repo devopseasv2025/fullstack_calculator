@@ -50,9 +50,9 @@ jobs:
       - name: Generate report
         run: |
           reportgenerator \
-          -reports:"TestResults/**/coverage.cobertura.xml" \
-          -targetdir:coverage-report \
-          -reporttypes:Html,SonarQube
+            -reports:TestResults/**/coverage.cobertura.xml \
+            -targetdir:coverage-report \
+            -reporttypes:SonarQube
 
       - name: Complete Static Code Analysis
         run: |
