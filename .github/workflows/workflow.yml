@@ -47,12 +47,7 @@ jobs:
           /d:sonar.qualitygate.wait=true \
           /d:sonar.qualitygate.timeout=300
       
-      - name: Generate report
-        run: |
-          reportgenerator \
-          -reports:"TestResults/**/coverage.cobertura.xml" \
-          -targetdir:coverage-report \
-          -reporttypes:Html, SonarQube
+      
 
       - name: Complete Static Code Analysis
         run: |
@@ -68,3 +63,17 @@ jobs:
         with:
           name: Stryker Report
           path: StrykerOutput
+
+      - name: Collect Stryker Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Stryker Report
+          path: StrykerOutput
+      
+      - name: Generate report
+        run: |
+          reportgenerator \
+          -reports:"TestResults/**/coverage.cobertura.xml" \
+          -targetdir:coverage-report \
+          -reporttypes:Html, SonarQube
