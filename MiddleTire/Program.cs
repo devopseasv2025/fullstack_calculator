@@ -1,3 +1,5 @@
+using Calculator;
+
 namespace MiddleTire;
 
 public class Program
@@ -5,7 +7,7 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
+        // var cal = new SimpleCalculator(); 
         // Add services to the container.
         builder.Services.AddAuthorization();
 
@@ -21,7 +23,9 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-
+        
+        
+        
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
