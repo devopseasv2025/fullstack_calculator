@@ -26,12 +26,16 @@ jobs:
           dotnet tool install -g dotnet-sonarscanner
           dotnet tool install -g dotnet-reportgenerator-globaltool
           dotnet tool install -g dotnet-stryker
-          
-      - name: Run unit tests
-        run: dotnet test --collect:"XPlat Code Coverage" --results-directory TestResults
-      
+        
       - name: Display Version
         run: echo "Generated version is ${{ steps.semvar-app.outputs.version }}"
         
       - name: Build
         run: dotnet build
+        
+      - name: Run unit tests
+        run: dotnet test --collect:"XPlat Code Coverage" --results-directory TestResults
+
+      - name: Run Mutation Tests
+        run: |
+          dotnet stryker --break-at 80
