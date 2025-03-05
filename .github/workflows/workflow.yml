@@ -47,8 +47,6 @@ jobs:
       - name: Run unit tests
         run: dotnet test --collect:"XPlat Code Coverage" --results-directory TestResults
 
-      
-      
       - name: Run Mutation Tests
         run: |
           dotnet stryker --break-at 40
@@ -60,7 +58,7 @@ jobs:
           name: Stryker Report
           path: StrykerOutput
 
-      
+
       - name: Generate report
         run: |
           reportgenerator \
