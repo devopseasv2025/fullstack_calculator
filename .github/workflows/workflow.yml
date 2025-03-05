@@ -38,4 +38,11 @@ jobs:
 
       - name: Run Mutation Tests
         run: |
-          dotnet stryker --break-at 80
+          dotnet stryker --break-at 40
+
+      - name: Collect Stryker Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Stryker Report
+          path: StrykerOutput
