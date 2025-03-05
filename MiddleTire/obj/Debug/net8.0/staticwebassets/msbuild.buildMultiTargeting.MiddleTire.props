@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\MiddleTire.props" />
+</Project>

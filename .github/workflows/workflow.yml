@@ -1,0 +1,28 @@
+name: workflow.yml
+on:
+  pull_request:
+    branches: 
+      - master
+      - main
+  
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for accurate results of code analysis
+      
+      - name: Application Version
+        id: semvar-app
+        uses: paulhatch/semantic-version@v5.4.0
+        with:
+          bump_each_commit: 'true'
+
+      - name: Display Version
+        run: echo "Generated version is ${{ steps.semvar-app.outputs.version }}"
+        
+      - name: Build
+        run: dotnet build

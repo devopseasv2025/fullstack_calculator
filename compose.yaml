@@ -1,0 +1,6 @@
+﻿services:
+  middletire:
+    image: middletire
+    build:
+      context: .
+      dockerfile: MiddleTire/Dockerfile
