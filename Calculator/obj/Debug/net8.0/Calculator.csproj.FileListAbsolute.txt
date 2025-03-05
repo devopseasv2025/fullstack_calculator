@@ -9,3 +9,4 @@ C:\Users\elias\Desktop\Studies\DevOps\week5\fullstack_calculator\Calculator\obj\
 C:\Users\elias\Desktop\Studies\DevOps\week5\fullstack_calculator\Calculator\obj\Debug\net8.0\refint\Calculator.dll
 C:\Users\elias\Desktop\Studies\DevOps\week5\fullstack_calculator\Calculator\obj\Debug\net8.0\Calculator.pdb
 C:\Users\elias\Desktop\Studies\DevOps\week5\fullstack_calculator\Calculator\obj\Debug\net8.0\ref\Calculator.dll
+C:\Users\elias\Desktop\Studies\DevOps\week5\fullstack_calculator\Calculator\obj\Debug\net8.0\Calculator.sourcelink.json
