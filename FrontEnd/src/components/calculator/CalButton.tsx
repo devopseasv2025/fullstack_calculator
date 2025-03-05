@@ -6,6 +6,6 @@ interface CalButtonProps {
 
 export function CalButton({ text }: CalButtonProps): React.ReactElement {
     return (
-        <button data-testid={"button-${text}"}> { text } </button>
+        <button data-testid={`button-${text}`}> { text } </button>
     );
 }
