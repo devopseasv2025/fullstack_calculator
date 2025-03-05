@@ -54,16 +54,6 @@ jobs:
             -targetdir:coverage-report \
             -reporttypes:SonarQube
 
-      - name: Complete Static Code Analysis
-        run: |
-          dotnet sonarscanner end \
-          /d:sonar.token=${{ secrets.SONARQUBE_TOKEN }}      
-          
-
-      - name: Run Mutation Tests
-        run: |
-          dotnet stryker --break-at 40
-
       - name: Collect Stryker Report
         if: always()
         uses: actions/upload-artifact@v4
@@ -77,6 +67,17 @@ jobs:
         with:
           name: Coverage Report
           path: coverage-report
+
+      - name: Complete Static Code Analysis
+        run: |
+          dotnet sonarscanner end \
+          /d:sonar.token=${{ secrets.SONARQUBE_TOKEN }}      
+          
+
+      - name: Run Mutation Tests
+        run: |
+          dotnet stryker --break-at 40
+
 
 
 
