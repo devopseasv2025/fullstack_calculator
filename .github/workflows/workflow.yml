@@ -47,10 +47,8 @@ jobs:
       - name: Run unit tests
         run: dotnet test --collect:"XPlat Code Coverage" --results-directory TestResults
 
-      - name: Complete Static Code Analysis
-        run: |
-          dotnet sonarscanner end \
-          /d:sonar.token=${{ secrets.SONARQUBE_TOKEN }}      
+      
+      
       - name: Run Mutation Tests
         run: |
           dotnet stryker --break-at 40
@@ -74,4 +72,9 @@ jobs:
           reportgenerator \
           -reports:"TestResults/**/coverage.cobertura.xml" \
           -targetdir:coverage-report \
-          -reporttypes:Html, SonarQube
+          -reporttypes:Html,SonarQube
+
+      - name: Complete Static Code Analysis
+        run: |
+          dotnet sonarscanner end \
+          /d:sonar.token=${{ secrets.SONARQUBE_TOKEN }}      
