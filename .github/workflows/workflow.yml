@@ -47,6 +47,13 @@ jobs:
       - name: Run unit tests
         run: dotnet test --collect:"XPlat Code Coverage" --results-directory TestResults
 
+      - name: Generate report
+        run: |
+          reportgenerator \
+          -reports:"TestResults/**/coverage.cobertura.xml" \
+          -targetdir:coverage-report \
+          -reporttypes:Html,SonarQube
+
       - name: Complete Static Code Analysis
         run: |
           dotnet sonarscanner end \
@@ -72,9 +79,4 @@ jobs:
           path: coverage-report
 
 
-      - name: Generate report
-        run: |
-          reportgenerator \
-          -reports:"TestResults/**/coverage.cobertura.xml" \
-          -targetdir:coverage-report \
-          -reporttypes:Html,SonarQube
+
