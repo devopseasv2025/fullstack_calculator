@@ -58,6 +58,13 @@ jobs:
           name: Stryker Report
           path: StrykerOutput
 
+      - name: Collect Coverage Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Coverage Report
+          path: coverage-report
+
 
       - name: Generate report
         run: |
