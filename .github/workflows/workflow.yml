@@ -45,7 +45,8 @@ jobs:
         run: dotnet build
         
       - name: Run unit tests
-        run: dotnet test --collect:"XPlat Code Coverage" --results-directory TestResults
+        run: |
+          dotnet test --collect:"XPlat Code Coverage" --results-directory TestResults
 
       - name: Generate report
         run: |
@@ -54,6 +55,12 @@ jobs:
             -targetdir:coverage-report \
             -reporttypes:SonarQube
 
+      - name: Complete Static Code Analysis
+        run: |
+          dotnet sonarscanner end \
+          /d:sonar.token=${{ secrets.SONARQUBE_TOKEN }}      
+      
+      
       - name: Collect Stryker Report
         if: always()
         uses: actions/upload-artifact@v4
@@ -66,13 +73,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Coverage Report
-          path: coverage-report
-
-      - name: Complete Static Code Analysis
-        run: |
-          dotnet sonarscanner end \
-          /d:sonar.token=${{ secrets.SONARQUBE_TOKEN }}      
-          
+          path: coverage-report          
 
       - name: Run Mutation Tests
         run: |
