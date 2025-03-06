@@ -5,7 +5,7 @@ interface SelectCalProps {
     setCalType: (type: "simple" | "cached") => void;
 }
 
-export default function SelectCal({ setCalType }: SelectCalProps) {
+export default function SelectCal({ setCalType }: Readonly <SelectCalProps>) {
     const calType = useContext(TypeOfCalContext);
 
     return (

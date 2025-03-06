@@ -1,7 +1,7 @@
 import React from "react";
 
 interface CalButtonProps {
-    text: string;
+    readonly text: string;
 }
 
 export function CalButton({ text }: CalButtonProps): React.ReactElement {

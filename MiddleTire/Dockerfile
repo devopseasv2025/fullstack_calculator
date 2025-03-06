@@ -11,11 +11,11 @@ COPY ["MiddleTire/MiddleTire.csproj", "MiddleTire/"]
 RUN dotnet restore "MiddleTire/MiddleTire.csproj"
 COPY . .
 WORKDIR "/src/MiddleTire"
-RUN dotnet build "MiddleTire.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "MiddleTire.csproj" -c "$BUILD_CONFIGURATION" -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "MiddleTire.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "MiddleTire.csproj" -c "$BUILD_CONFIGURATION" -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
