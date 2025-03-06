@@ -9,6 +9,41 @@ namespace Calculator.Tests;
 
 public class CachedCalculatorTest
 {
+    
+    
+    [Test]
+    public void Add()
+    {
+        // Arrange
+        var calc = new CachedCalculator();
+        var a = 2;
+        var b = 3;
+        
+
+        // Act
+        var result = calc.Add(a, b);
+
+        // Assert
+        Assert.That(result, Is.EqualTo(5));
+    }
+    
+    [Test]
+    public void Add_Cashed()
+    {
+        // Arrange
+        var calc = new CachedCalculator();
+        var a = 2;
+        var b = 3;
+
+        // Act
+        var result = calc.Add(a, b);
+        var result2 = calc.Add(a, b);
+
+        // Assert
+        Assert.That(calc._cache, Has.Count.EqualTo(1));
+    }
+    
+    
      [Test]
     public void Substract()
     {
@@ -24,6 +59,22 @@ public class CachedCalculatorTest
         Assert.That(result, Is.EqualTo(1));
         
     }
+    
+    [Test]
+    public void Subtract_Cashed()
+    {
+        // Arrange
+        var calc = new CachedCalculator();
+        var a = 2;
+        var b = 3;
+
+        // Act
+        var result = calc.Subtract(a, b);
+
+        // Assert
+        Assert.That(calc._cache, Has.Count.EqualTo(1));
+    }
+    
     [Test]
     public void Multiply()
     {
@@ -40,6 +91,21 @@ public class CachedCalculatorTest
     }
     
     [Test]
+    public void Multiply_Cashed()
+    {
+        // Arrange
+        var calc = new CachedCalculator();
+        var a = 2;
+        var b = 3;
+
+        // Act
+        var result = calc.Multiply(a, b);
+
+        // Assert
+        Assert.That(calc._cache, Has.Count.EqualTo(1));
+    }
+    
+    [Test]
     public void Divide()
     {
         // Arrange
@@ -52,6 +118,21 @@ public class CachedCalculatorTest
         
         // Assert
         Assert.That(result, Is.EqualTo(5));
+    }
+    
+    [Test]
+    public void Divide_Cashed()
+    {
+        // Arrange
+        var calc = new CachedCalculator();
+        var a = 2;
+        var b = 3;
+
+        // Act
+        var result = calc.Divide(a, b);
+
+        // Assert
+        Assert.That(calc._cache, Has.Count.EqualTo(1));
     }
     
     [Test]
@@ -94,6 +175,20 @@ public class CachedCalculatorTest
     }
     
     [Test]
+    public void Factorial_Cashed()
+    {
+        // Arrange
+        var calc = new CachedCalculator();
+        var a = 2;
+
+        // Act
+        var result = calc.Factorial(a);
+
+        // Assert
+        Assert.That(calc._cache, Has.Count.EqualTo(1));
+    }
+    
+    [Test]
     public void IsPrime_One()
     {
         // Arrange
@@ -133,5 +228,19 @@ public class CachedCalculatorTest
         
         // Assert
         Assert.That(result, Is.False);
+    }
+    
+    [Test]
+    public void IsPrime_Cashed()
+    {
+        // Arrange
+        var calc = new CachedCalculator();
+        var a = 2;
+
+        // Act
+        var result = calc.IsPrime(a);
+
+        // Assert
+        Assert.That(calc._cache, Has.Count.EqualTo(1));
     }
 }
