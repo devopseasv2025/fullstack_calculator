@@ -9,7 +9,8 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["MiddleTire/MiddleTire.csproj", "MiddleTire/"]
 RUN dotnet restore "MiddleTire/MiddleTire.csproj"
-COPY . .
+CMD mkdir application
+COPY . ./application
 WORKDIR "/src/MiddleTire"
 RUN dotnet build "MiddleTire.csproj" -c "$BUILD_CONFIGURATION" -o /app/build
 
