@@ -2,6 +2,7 @@ import './App.css'
 import SelectCal from "./components/SelectCal.tsx";
 import { createContext, useState } from "react";
 import {Calculator} from "./components/calculator/Calculator.tsx";
+import ShowHistory from "./components/ShowHistory.tsx";
 
 type CalculatorType = "simple" | "cached";
 
@@ -15,6 +16,7 @@ function App() {
         <TypeOfCalContext.Provider value={calType}>
             <SelectCal setCalType={setCalType} />
             <Calculator/>
+            <ShowHistory />
         </TypeOfCalContext.Provider>
     );
 }
