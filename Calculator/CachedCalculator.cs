@@ -80,7 +80,7 @@ public class CachedCalculator : ICalculator
         }
     }
 
-    private class Calculation<T>(T? result, string operation, int a, int? b = null)
+    private sealed class Calculation<T>(T? result, string operation, int a, int? b = null)
         : Calculation(operation, a, b)
     {
         public T? Result { get; set; } = result;
