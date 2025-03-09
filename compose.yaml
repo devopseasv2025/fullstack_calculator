@@ -35,9 +35,9 @@
       FLYWAY_USER: ${DATABASE_USER}
       FLYWAY_PASSWORD: ${DATABASE_PASSWORD}
       FLYWAY_CONNECT_RETRIES: 5
-      volumes:
-        - ./db/migrations:/flyway/sql
-      command: migrate
+    volumes:
+      - ./db/migrations:/flyway/sql
+    command: migrate
       
 volumes:
   mariadb_data:
