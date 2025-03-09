@@ -1,4 +1,5 @@
 using Calculator;
+using Microsoft.AspNetCore.Mvc;
 using MiddleTire.Model;
 using MiddleTire.Repository;
 
@@ -36,7 +37,7 @@ public static class Program
         app.UseAuthorization();
 
         
-        app.MapPost("/api/calculate", (CalculatorOperation calcOperation, ICalculatorRepo calculatorRepo) =>
+        app.MapPost("/api/calculate", async ( [FromBody] CalculatorOperation calcOperation, ICalculatorRepo calculatorRepo) =>
         {
             try
             {
