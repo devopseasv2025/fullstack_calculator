@@ -96,15 +96,16 @@ jobs:
         with:
           host: ${{ vars.STAGING_SERVER_IP }}
           username: ${{ vars.STAGING_SERVER_USERNAME }}
-          key: ${{ secrets.STAGING_SERVER_SSH_KEY }}
+          key: |
+            ${{ secrets.STAGING_SERVER_SSH_KEY }}
           script: |
             export DATABASE_ROOT_PASSWORD="${{ secrets.DATABASE_ROOT_PASSWORD }}"
             export DATABASE_NAME="${{ vars.DATABASE_NAME }}"
             export DATABASE_USER="${{ vars.DATABASE_USER }}"
             export DATABASE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}"
             cd dummy-data-app
-            docker compose pull
-            docker compose up -d mariadb
-            docker compose up flyway --exit-code-from flyway
+            sudo docker compose pull
+            sudo docker compose up -d mariadb
+            sudo docker compose up flyway --exit-code-from flyway
 
 
