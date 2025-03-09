@@ -105,6 +105,6 @@ jobs:
             cd dummy-data-app
             docker compose pull
             docker compose up -d mariadb
-            docker compose up flyway --exit-code-from	flyway
+            docker compose up flyway --exit-code-from flyway
 
 
