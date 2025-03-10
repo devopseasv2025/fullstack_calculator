@@ -104,6 +104,7 @@ jobs:
             export DATABASE_USER="${{ vars.DATABASE_USER }}"
             export DATABASE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}"
             cd dummy-data-app
+            docker-compose -f <docker-compose.yml>
             sudo docker compose pull
             sudo docker compose up -d mariadb
             sudo docker compose up flyway --exit-code-from flyway
