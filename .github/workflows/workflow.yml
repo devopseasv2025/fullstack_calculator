@@ -106,7 +106,7 @@ jobs:
             cd dummy-data-app
             sudo docker compose pull
             sudo docker compose up -d mariadb
-            sudo docker compose up flyway --exit-code-from flyway
+            sudo docker compose up flyway --exit-code-from flyway -c /path/to/flyway.conf
           debug: true
 
 
