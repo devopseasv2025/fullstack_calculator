@@ -23,6 +23,64 @@ public class CalculatorRepoTest
     }
 
     [Test]
+    public void Calculate_With_CashedCalculator_Returns_200OK()
+    {
+        // Arrange
+        ICalculatorOperation operation = new CalculatorOperation
+        {
+            Number1 = 5,
+            Number2 = 3,
+            Operation = ECalculatorOperations.Addition,
+            Calculator = ECalculators.CashedCalculator
+        };
+
+        // Act
+        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+
+        // Assert
+        Assert.That(result.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
+    }
+
+    [Test]
+    public void Calculate_With_SimpleCalculator_Returns_200OK()
+    {
+        // Arrange
+        ICalculatorOperation operation = new CalculatorOperation
+        {
+            Number1 = 5,
+            Number2 = 3,
+            Operation = ECalculatorOperations.Addition,
+            Calculator = ECalculators.SimpleCalculator
+        };
+
+        // Act
+        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+
+        // Assert
+        Assert.That(result.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
+    }
+
+    [Test]
+    public void Calculate_With_InvalidCalculator_Returns_400BadRequest()
+    {
+        // Arrange
+        ICalculatorOperation operation = new CalculatorOperation
+        {
+            Number1 = 5,
+            Number2 = 3,
+            Operation = ECalculatorOperations.Addition,
+            Calculator = (ECalculators)999 // Invalid value
+        };
+
+        // Act
+        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+
+        // Assert
+        Assert.That(result.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
+        Assert.That(result.Value, Is.EqualTo("Invalid calculatorOperation"));
+    }
+
+    [Test]
     public void Operations_returns_obj_IResult_valid()
     {
         // ARRANGE
