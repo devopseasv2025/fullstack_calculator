@@ -60,6 +60,15 @@ jobs:
           dotnet sonarscanner end \
           /d:sonar.token=${{ secrets.SONARQUBE_TOKEN }}      
     
+  Delivery:
+    needs: integration # This ensures delivery runs only if integration succeeds
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for accurate results of code analysis 
 
       - name: Collect Coverage Report
         if: always()
