@@ -87,7 +87,7 @@ jobs:
           host: ${{ vars.STAGING_SERVER_IP }}
           username: ${{ vars.STAGING_SERVER_USERNAME }}
           key: ${{ secrets.STAGING_SERVER_SSH_KEY }}
-          source: "docker-compose.yaml,db/**/*.*"
+          source: "compose.yaml,db/**/*.*"
           target: dummy-data-app/
           rm: true
       
@@ -106,13 +106,6 @@ jobs:
             cd dummy-data-app
             sudo docker compose pull
             sudo docker compose up -d mariadb
-            # Wait until the MariaDB container is healthy
-            echo "Waiting for MariaDB to be ready..."
-            while [ "$(sudo docker inspect -f '{{.State.Health.Status}}' dummy-data-app_mariadb_1)" != "healthy" ]; do
-            sleep 5
-            done
-
-            echo "MariaDB is up and healthy!"
             sudo docker compose up flyway --exit-code-from flyway
           debug: true
 
