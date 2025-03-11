@@ -1,17 +1,11 @@
 ﻿services:
-  middletire:
-    image: middletire
+  web-api:
     build:
       context: .
       dockerfile: MiddleTire/Dockerfile
-
-  middletire-1:
-    image: middletire-1
-    build:
-      context: .
-      dockerfile: MiddleTire/Dockerfile
-      
-      
+    ports:
+      - "8080:8080"
+      - "8081:8081"
   mariadb:
     image: mariadb:11.2
     environment:
@@ -21,22 +15,34 @@
       MYSQL_PASSWORD: ${DATABASE_PASSWORD} #Secret
     volumes:
       - mariadb_data:/var/lib/mysql
+    env_file:
+      - .env
     ports:
       - "3306:3306"
-        
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "--password=${DATABASE_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
         
   flyway:
-    image: flyway/flyway:latest
-    container_name: flyway
-    depends_on:
-      - mariadb
-    volumes:
-      - ./db/migrations:/flyway/sql
-    command: "migrate"
-    environment:
-      FLYWAY_URL: jdbc:mariadb://mariadb:3306/${DATABASE_NAME}
-      FLYWAY_USER: ${DATABASE_USER}
-      FLYWAY_PASSWORD: ${DATABASE_PASSWORD}
-    restart: on-failure
+      image: flyway/flyway:latest
+      container_name: flyway
+      depends_on:
+        mariadb:
+          condition: service_healthy
+      volumes:
+        - ./db/migrations:/flyway/sql
+      command: [ "migrate" ]
+      env_file:
+        - .env
+      environment:
+        FLYWAY_URL: jdbc:mariadb://mariadb:3306/${DATABASE_NAME}
+        FLYWAY_USER: ${DATABASE_USER}
+        FLYWAY_PASSWORD: ${DATABASE_PASSWORD}
+      restart: on-failure
+    
 volumes:
   mariadb_data:
+  
+  
