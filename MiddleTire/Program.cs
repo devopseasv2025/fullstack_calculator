@@ -37,7 +37,7 @@ public static class Program
         app.UseAuthorization();
 
         
-        app.MapPost("/api/calculate", async ( [FromBody] CalculatorOperation calcOperation, ICalculatorRepo calculatorRepo) =>
+        app.MapPost("/api/calculate", ( [FromBody] CalculatorOperation calcOperation, ICalculatorRepo calculatorRepo) =>
         {
             try
             {
