@@ -28,7 +28,7 @@ public class CalculatorRepoTest
     public void Operations_returns_obj_IResult_valid()
     {
         // ARRANGE
-        ICalculatorRepo calculatorRepo = new CalculatorRepo();
+        CalculatorRepo calculatorRepo = new CalculatorRepo();
         ICalculatorOperation operation = new CalculatorOperation
         {
             Number1 = 1,
