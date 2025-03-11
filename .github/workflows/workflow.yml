@@ -25,7 +25,6 @@ jobs:
         run: |
           dotnet tool install -g dotnet-sonarscanner
           dotnet tool install -g dotnet-reportgenerator-globaltool
-          dotnet tool install -g dotnet-stryker
         
       - name: Display Version
         run: echo "Generated version is ${{ steps.semvar-app.outputs.version }}"
@@ -70,6 +69,11 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for accurate results of code analysis 
 
+      - name: Install required tools
+        run: |
+          dotnet tool install -g dotnet-stryker
+          dotnet tool install -g dotnet-reportgenerator-globaltool
+
       - name: Collect Coverage Report
         if: always()
         uses: actions/upload-artifact@v4
@@ -88,7 +92,10 @@ jobs:
         with:
           name: Stryker Report
           path: StrykerOutput
-          
+  
+  Deployment:
+    needs: [integration, Delivery] 
+    runs-on: ubuntu-latest
           
       - name: Copy files to staging server
         if: always()
