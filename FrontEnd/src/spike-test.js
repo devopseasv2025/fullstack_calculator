@@ -13,6 +13,10 @@ export const options = {
     ]
 }
 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 const randomOperator = (enumeration) => {
     const values = Object.keys(enumeration);
     const enumKey = values[Math.floor(Math.random() * values.length)];
@@ -20,8 +24,8 @@ const randomOperator = (enumeration) => {
 }
 
 const payload = JSON.stringify({
-    Number1: Math.random(1, 100),
-    Number2: Math.random(1, 100) ,
+    Number1: getRandomInt(1, 100),
+    Number2: getRandomInt(1, 100) ,
     Operation: randomOperator(ECalculators),
     Result: 0,
     Calculator: randomOperator(ECalculators)
