@@ -56,7 +56,7 @@ public class CachedCalculatorTest
         var result = calc.Subtract(a, b);
         
         // Assert
-        Assert.That(result, Is.EqualTo(1));
+        Assert.That(result, Is.EqualTo(-1));
         
     }
     
