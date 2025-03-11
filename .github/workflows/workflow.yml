@@ -99,10 +99,10 @@ jobs:
           username: ${{ vars.STAGING_SERVER_USERNAME }}
           key: ${{ secrets.STAGING_SERVER_SSH_KEY }}
           script: |
-            export DATABASE_ROOT_PASSWORD="${{ secrets.DATABASE_ROOT_PASSWORD }}"
-            export DATABASE_NAME="${{ vars.DATABASE_NAME }}"
-            export DATABASE_USER="${{ vars.DATABASE_USER }}"
-            export DATABASE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}"
+            DATABASE_ROOT_PASSWORD="${{ secrets.DATABASE_ROOT_PASSWORD }}"
+            DATABASE_NAME="${{ vars.DATABASE_NAME }}"
+            DATABASE_USER="${{ vars.DATABASE_USER }}"
+            DATABASE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}"
             cd dummy-data-app
             sudo docker compose pull
             sudo docker compose up -d mariadb
