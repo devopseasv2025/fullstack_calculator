@@ -59,14 +59,7 @@ jobs:
         run: |
           dotnet sonarscanner end \
           /d:sonar.token=${{ secrets.SONARQUBE_TOKEN }}      
-      
-      
-      - name: Collect Stryker Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Stryker Report
-          path: StrykerOutput
+    
 
       - name: Collect Coverage Report
         if: always()
@@ -77,7 +70,15 @@ jobs:
 
       - name: Run Mutation Tests
         run: |
-          dotnet stryker --break-at 40
+          dotnet stryker --break-at 80
+          
+          
+      - name: Collect Stryker Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Stryker Report
+          path: StrykerOutput
           
           
       - name: Copy files to staging server
