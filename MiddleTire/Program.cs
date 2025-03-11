@@ -30,12 +30,9 @@ public static class Program
             app.UseSwaggerUI();
         }
         
-        
-        
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
-
         
         app.MapPost("/api/calculate", ( [FromBody] CalculatorOperation calcOperation, ICalculatorRepo calculatorRepo) =>
         {
