@@ -37,7 +37,6 @@
       FLYWAY_URL: jdbc:mariadb://mariadb:3306/${DATABASE_NAME}
       FLYWAY_USER: ${DATABASE_USER}
       FLYWAY_PASSWORD: ${DATABASE_PASSWORD}
-      FLYWAY_CONNECT_RETRIES: 5
     restart: on-failure
 volumes:
   mariadb_data:
