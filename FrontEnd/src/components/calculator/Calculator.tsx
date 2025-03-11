@@ -42,7 +42,6 @@ export function Calculator () {
             <div className={"button-row"}>
                 <CalButton text={"Clear"} onClick={handleClick} />
                 <CalButton text={"Delete"} onClick={handleClick} />
-                <CalButton text={","} onClick={handleClick} />
                 <CalButton text={"/"} onClick={handleClick} />
             </div>
             <div className={"button-row"}>
