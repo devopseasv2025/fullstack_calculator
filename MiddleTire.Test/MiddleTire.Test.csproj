@@ -20,6 +20,7 @@
   <ItemGroup>
     <Content Include="obj\Debug\net8.0\MiddleTi.8685D5F9.Up2Date" />
     <Content Include="obj\Debug\net8.0\MiddleTire.Test.AssemblyInfoInputs.cache" />
+    <Content Include="obj\Debug\net8.0\MiddleTire.Test.assets.cache" />
     <Content Include="obj\Debug\net8.0\MiddleTire.Test.csproj.AssemblyReference.cache" />
     <Content Include="obj\Debug\net8.0\MiddleTire.Test.csproj.CoreCompileInputs.cache" />
     <Content Include="obj\Debug\net8.0\MiddleTire.Test.csproj.FileListAbsolute.txt" />
