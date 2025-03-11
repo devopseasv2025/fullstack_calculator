@@ -470,6 +470,80 @@ public class CalculatorRepoTest
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
     }
+    
+    
+    [Test]
+    public void Calculate_Simple_IsPrime_Returns_true()
+    {
+        // Arrange
+        ICalculatorOperation operation = new CalculatorOperation
+        {
+            Number1 = 73,
+            Operation = ECalculatorOperations.Isprime,
+            Calculator = ECalculators.SimpleCalculator
+        };
+
+        // Act
+        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+
+        // Assert
+        Assert.That(result?.Value.Result! == 0);
+    }
+    
+    [Test]
+    public void Calculate_Simple_IsPrime_Returns_false()
+    {
+        // Arrange
+        ICalculatorOperation operation = new CalculatorOperation
+        {
+            Number1 = 72,
+            Operation = ECalculatorOperations.Isprime,
+            Calculator = ECalculators.SimpleCalculator
+        };
+
+        // Act
+        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+
+        // Assert
+        Assert.That(result?.Value.Result! == 1);
+    }
+    
+    [Test]
+    public void Calculate_Cashed_IsPrime_Returns_true()
+    {
+        // Arrange
+        ICalculatorOperation operation = new CalculatorOperation
+        {
+            Number1 = 73,
+            Operation = ECalculatorOperations.Isprime,
+            Calculator = ECalculators.CashedCalculator
+        };
+
+        // Act
+        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+
+        // Assert
+        Assert.That(result?.Value.Result! == 0);
+    }
+    
+    [Test]
+    public void Calculate_Cashed_IsPrime_Returns_false()
+    {
+        // Arrange
+        ICalculatorOperation operation = new CalculatorOperation
+        {
+            Number1 = 72,
+            Operation = ECalculatorOperations.Isprime,
+            Calculator = ECalculators.CashedCalculator
+        };
+
+        // Act
+        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+
+        // Assert
+        Assert.That(result?.Value.Result! == 1);
+    }
+    
     [Test]
     public void Calculate_Cashed_IsPrime_Returns_ok()
     {
