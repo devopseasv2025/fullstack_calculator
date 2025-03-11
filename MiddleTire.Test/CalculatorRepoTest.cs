@@ -510,5 +510,42 @@ public class CalculatorRepoTest
     }
 
     # endregion
+
+    [Test]
+    public void Calculate_Cashed_Operation_Invalid_Returns_not_ok()
+    {
+        // Arrange
+        ICalculatorOperation operation = new CalculatorOperation
+        {
+            Number1 = 5,
+            Number2 = 2, 
+            Operation = (ECalculatorOperations)00099932,  // BAD ENUM TYPE, ENUM TYPE DOES NOT EXIST.
+            Calculator = ECalculators.CashedCalculator
+        };
+
+        // Act
+        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+
+        // Assert
+        Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
+    }
     
+    [Test]
+    public void Calculate_Simple_Operation_Invalid_Returns_not_ok()
+    {
+        // Arrange
+        ICalculatorOperation operation = new CalculatorOperation
+        {
+            Number1 = 5,
+            Number2 = 2, 
+            Operation = (ECalculatorOperations)00099932,  // BAD ENUM TYPE, ENUM TYPE DOES NOT EXIST.
+            Calculator = ECalculators.SimpleCalculator
+        };
+
+        // Act
+        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+
+        // Assert
+        Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
+    }
 }
