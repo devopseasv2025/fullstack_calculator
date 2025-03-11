@@ -23,7 +23,7 @@ public class CalculatorRepo : ICalculatorRepo
         if (calculatorOperation.Calculator == ECalculators.SimpleCalculator)
         {
             var result = _calculate(_simpleCalculator, calculatorOperation);  
-            if (result == null) return Results.BadRequest("An error occured");
+            if (result == null) return Results.BadRequest("An error occured, formating of calculator operation is wrong");
             return Results.Ok(result);
         }  
         
@@ -36,19 +36,24 @@ public class CalculatorRepo : ICalculatorRepo
         switch (calculatorOperation.Operation)
         {
             case ECalculatorOperations.Addition:
-                calculatorOperation.Result = calculator.Value.Add(calculatorOperation.Number1, calculatorOperation.Number2);
+                
+                if (calculatorOperation.Number2 == null) return null;
+                calculatorOperation.Result = calculator.Value.Add(calculatorOperation.Number1, calculatorOperation.Number2.Value);
                 return calculatorOperation;
             
             case ECalculatorOperations.Subtraction:
-                calculatorOperation.Result = calculator.Value.Subtract(calculatorOperation.Number1, calculatorOperation.Number2);
+                if (calculatorOperation.Number2 == null) return null;
+                calculatorOperation.Result = calculator.Value.Subtract(calculatorOperation.Number1, calculatorOperation.Number2.Value);
                 return calculatorOperation;
             
             case ECalculatorOperations.Multiplication:
-                calculatorOperation.Result = calculator.Value.Multiply(calculatorOperation.Number1, calculatorOperation.Number2);
+                if (calculatorOperation.Number2 == null) return null;
+                calculatorOperation.Result = calculator.Value.Multiply(calculatorOperation.Number1, calculatorOperation.Number2.Value);
                 return calculatorOperation;
             
             case ECalculatorOperations.Division:
-                calculatorOperation.Result = calculator.Value.Divide(calculatorOperation.Number1, calculatorOperation.Number2);
+                if (calculatorOperation.Number2 == null) return null;
+                calculatorOperation.Result = calculator.Value.Divide(calculatorOperation.Number1, calculatorOperation.Number2.Value);
                 return calculatorOperation;
             
             case ECalculatorOperations.Factorial: 
