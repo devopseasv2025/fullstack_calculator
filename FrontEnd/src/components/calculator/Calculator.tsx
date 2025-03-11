@@ -1,31 +1,64 @@
 ﻿import {CalButton} from "./CalButton.tsx";
 import OutputScreen from "./OutputScreen.tsx";
-import React from "react";
+import {ECalculatorOperations} from "../../enum.ts";
+import React, {useContext} from "react";
+import {calculate, ICalculationOperation} from "../../api.ts";
+import {TypeOfCalContext} from "../../App.tsx";
 
 export function Calculator () {
+    const calType = useContext(TypeOfCalContext);
 
-    const [operator, setOperator] = React.useState<string>("");
+
+    const [operator, setOperator] = React.useState<ECalculatorOperations>(ECalculatorOperations.empty);
     const [operand1, setOperand1] = React.useState<string>("");
     const [operand2, setOperand2] = React.useState<string>("");
 
-    const handleClick = (text: string) => {
+    const handleClick = async (text: string) => {
         if (text === "Clear") {
-            setOperator("");
+            setOperator(ECalculatorOperations.empty);
             setOperand1("");
             setOperand2("");
-        }  else if (text === "Delete") {
+        } else if (text === "Delete") {
             if (operand2) {
                 setOperand2(operand2.slice(0, -1));
             } else if (operator) {
-                setOperator("");
+                setOperator(ECalculatorOperations.empty);
             } else {
                 setOperand1(operand1.slice(0, -1));
             }
         } else if (["+", "-", "*", "/"].includes(text)) {
-            if (operand1 && !operator) setOperator(text);
+            if (operand1 && !operator) {
+                // Map the button symbol to the enum value
+                switch (text) {
+                    case "+":
+                        setOperator(ECalculatorOperations.Addition);
+                        break;
+                    case "-":
+                        setOperator(ECalculatorOperations.Subtraction);
+                        break;
+                    case "*":
+                        setOperator(ECalculatorOperations.Multiplication);
+                        break;
+                    case "/":
+                        setOperator(ECalculatorOperations.Division);
+                        break;
+                    default:
+                        break;
+                }
+            }
         } else if (text === "=") {
             if (operand1 && operator && operand2) {
-                console.log("API CALL HERE")
+                const operation: ICalculationOperation = {
+                    number1: parseFloat(operand1),
+                    number2: parseFloat(operand2),
+                    operation: operator,
+                    calculator: calType, // Assuming 1 is for SimpleCalculator, you can change this as per your requirement
+                };
+
+                const calculationResult = await calculate(operation);
+                if (calculationResult) {
+                    setOperand1(calculationResult.result); // Assuming the result is returned in a field called 'result'
+                }
             }
         } else {
             if (!operator) {

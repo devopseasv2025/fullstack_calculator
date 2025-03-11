@@ -1,16 +1,16 @@
 import './App.css'
 import SelectCal from "./components/SelectCal.tsx";
-import { createContext, useState } from "react";
+import {createContext, useState} from "react";
 import {Calculator} from "./components/calculator/Calculator.tsx";
 import ShowHistory from "./components/ShowHistory.tsx";
+import {ECalculators} from "./enum.ts";
 
-type CalculatorType = "simple" | "cached";
 
 // Create the context with a default value
-export const TypeOfCalContext = createContext<CalculatorType>("simple");
+export const TypeOfCalContext = createContext<ECalculators>(ECalculators.CashedCalculator);
 
 function App() {
-    const [calType, setCalType] = useState<CalculatorType>("simple");
+    const [calType, setCalType] = useState<ECalculators>(ECalculators.SimpleCalculator);
 
     return (
         <TypeOfCalContext.Provider value={calType}>
