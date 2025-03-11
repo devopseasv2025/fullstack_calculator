@@ -1,6 +1,13 @@
-@MiddleTire_HostAddress = http://localhost:5164
+@MiddleTire_HostAddress = http://localhost:8080
 
-GET {{MiddleTire_HostAddress}}/weatherforecast/
-Accept: application/json
+POST http://localhost:8080/api/calculate
+Content-Type: application/json
+{
+    "Number1": 15,
+    "Number2": 100,
+    "Operation": 1,
+    "Calculator": 1
+}
+
 
 ###
