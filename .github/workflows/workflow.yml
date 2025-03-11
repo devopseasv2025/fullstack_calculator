@@ -82,6 +82,7 @@ jobs:
           
           
       - name: Copy files to staging server
+        if: always()
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ vars.STAGING_SERVER_IP }}
@@ -93,6 +94,7 @@ jobs:
       
       
       - name: Update staging server
+        if: always()
         uses: appleboy/ssh-action@v1.2.1
         with:
           host: ${{ vars.STAGING_SERVER_IP }}
@@ -100,12 +102,16 @@ jobs:
           key: ${{ secrets.STAGING_SERVER_SSH_KEY }}
           script: |
             cd dummy-data-app
+            
+            cat <<EOF > .env
+            DATABASE_ROOT_PASSWORD=${{ secrets.DATABASE_ROOT_PASSWORD }}
+            DATABASE_NAME=${{ vars.DATABASE_NAME }}
+            DATABASE_USER=${{ vars.DATABASE_USER }}
+            DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}
+            EOF
+            
             sudo docker compose pull
             sudo docker compose up -d mariadb
-            DATABASE_ROOT_PASSWORD="${{ secrets.DATABASE_ROOT_PASSWORD }}"
-            DATABASE_NAME="${{ vars.DATABASE_NAME }}"
-            DATABASE_USER="${{ vars.DATABASE_USER }}"
-            DATABASE_PASSWORD="${{ secrets.DATABASE_PASSWORD }}"
             sudo docker compose up flyway --exit-code-from flyway
           debug: true
 
