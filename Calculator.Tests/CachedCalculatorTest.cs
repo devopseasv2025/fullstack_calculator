@@ -53,7 +53,7 @@ public class CachedCalculatorTest
         var b = 3;
         
         // Act
-        var result = calc.Subtract(b, a);
+        var result = calc.Subtract(a, b);
         
         // Assert
         Assert.That(result, Is.EqualTo(1));
@@ -69,7 +69,9 @@ public class CachedCalculatorTest
         var b = 3;
 
         // Act
-        var result = calc.Subtract(a, b);
+        var result1 = calc.Subtract(a, b);
+        var result2 = calc.Subtract(a, b);
+
 
         // Assert
         Assert.That(calc._cache, Has.Count.EqualTo(1));
@@ -99,7 +101,9 @@ public class CachedCalculatorTest
         var b = 3;
 
         // Act
-        var result = calc.Multiply(a, b);
+        var result1 = calc.Multiply(a, b);
+        var result2 = calc.Multiply(a, b);
+
 
         // Assert
         Assert.That(calc._cache, Has.Count.EqualTo(1));
@@ -129,7 +133,9 @@ public class CachedCalculatorTest
         var b = 3;
 
         // Act
-        var result = calc.Divide(a, b);
+        var result1 = calc.Divide(a, b);
+        var result2 = calc.Divide(a, b);
+
 
         // Assert
         Assert.That(calc._cache, Has.Count.EqualTo(1));
@@ -182,7 +188,9 @@ public class CachedCalculatorTest
         var a = 2;
 
         // Act
-        var result = calc.Factorial(a);
+        var result1 = calc.Factorial(a);
+        var result2 = calc.Factorial(a);
+
 
         // Assert
         Assert.That(calc._cache, Has.Count.EqualTo(1));
@@ -238,7 +246,9 @@ public class CachedCalculatorTest
         var a = 2;
 
         // Act
-        var result = calc.IsPrime(a);
+        var result1 = calc.IsPrime(a);
+        var result2 = calc.IsPrime(a);
+
 
         // Assert
         Assert.That(calc._cache, Has.Count.EqualTo(1));
