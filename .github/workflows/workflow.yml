@@ -96,7 +96,8 @@ jobs:
   Deployment:
     needs: [integration, Delivery] 
     runs-on: ubuntu-latest
-          
+    steps:
+      
       - name: Copy files to staging server
         if: always()
         uses: appleboy/scp-action@v0.1.7
