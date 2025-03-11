@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Calculator\Calculator.csproj" />
     <PackageReference Include="coverlet.collector"/>
+    <ProjectReference Include="..\MiddleTire\MiddleTire.csproj" />
   </ItemGroup>
   
 </Project>
