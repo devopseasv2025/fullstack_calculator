@@ -17,12 +17,14 @@ public class CalculatorRepo : ICalculatorRepo
         if (calculatorOperation.Calculator == ECalculators.CashedCalculator)
         {
             var result = _calculate(_cashedCalculator, calculatorOperation);  
+            if (result == null) return Results.BadRequest("An error occured");
             return Results.Ok(result);
         }  
         
         if (calculatorOperation.Calculator == ECalculators.SimpleCalculator)
         {
             var result = _calculate(_simpleCalculator, calculatorOperation);  
+            if (result == null) return Results.BadRequest("An error occured, formating of calculator operation is wrong");
             return Results.Ok(result);
         }  
         
