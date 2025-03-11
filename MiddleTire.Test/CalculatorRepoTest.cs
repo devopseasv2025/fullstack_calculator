@@ -1,7 +1,5 @@
-﻿using System.Runtime.InteropServices.JavaScript;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using MiddleTire.Enums;
 using MiddleTire.Model;
 using MiddleTire.Repository;
@@ -43,6 +41,8 @@ public class CalculatorRepoTest
         // ASSERT
         Assert.That(result, Is.InstanceOf<IResult>());
     }
+
+   
     
     [Test]
     public void Calculate_Simple_Add_Missing_Number2_Returns_BadRequest()
@@ -195,8 +195,7 @@ public class CalculatorRepoTest
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
     }
-    
-    // multiple 
+    # region multiplication
     [Test]
     public void Calculate_Simple_Mul_Missing_Number2_Returns_BadRequest()
     {
@@ -271,8 +270,92 @@ public class CalculatorRepoTest
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
     }
+    # endregion
+
+    #region Divison
+    // multiple 
+    [Test]
+    public void Calculate_Simple_Div_Missing_Number2_Returns_BadRequest()
+    {
+        // Arrange
+        ICalculatorOperation operation = new CalculatorOperation
+        {
+            Number1 = 5,
+            Number2 = null, // Missing second number
+            Operation = ECalculatorOperations.Division,
+            Calculator = ECalculators.SimpleCalculator
+        };
+
+        // Act
+        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+
+        // Assert
+        Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
+    }
     
-    // Factorial 
+    [Test]
+    public void Calculate_Simple_Div_Returns_ok()
+    {
+        // Arrange
+        ICalculatorOperation operation = new CalculatorOperation
+        {
+            Number1 = 5,
+            Number2 = 10, 
+            Operation = ECalculatorOperations.Division,
+            Calculator = ECalculators.SimpleCalculator
+        };
+
+        // Act
+        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+
+        // Assert
+        Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
+    }
+    [Test]
+    public void Calculate_Cashed_Div_Missing_Number2_Returns_BadRequest()
+    {
+        // Arrange
+        ICalculatorOperation operation = new CalculatorOperation
+        {
+            Number1 = 5,
+            Number2 = null, // Missing second number
+            Operation = ECalculatorOperations.Division,
+            Calculator = ECalculators.CashedCalculator
+        };
+
+        // Act
+        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+
+        // Assert
+        Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
+    }
+    
+    [Test]
+    public void Calculate_Cashed_Div_Returns_ok()
+    {
+        // Arrange
+        ICalculatorOperation operation = new CalculatorOperation
+        {
+            Number1 = 5,
+            Number2 = 10, 
+            Operation = ECalculatorOperations.Division,
+            Calculator = ECalculators.CashedCalculator
+        };
+
+        // Act
+        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+
+        // Assert
+        Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
+    }
+    
+
+    #endregion
+
+    #region Factorial
+
+    
+
     
     [Test]
     public void Calculate_Simple_Factorial_Returns_ok()
@@ -308,5 +391,66 @@ public class CalculatorRepoTest
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
     }
+    #endregion
+
+    #region IsPrime
+    
+    [Test]
+    public void Calculate_Simple_IsPrime_Returns_ok()
+    {
+        // Arrange
+        ICalculatorOperation operation = new CalculatorOperation
+        {
+            Number1 = 5,
+            Operation = ECalculatorOperations.Isprime,
+            Calculator = ECalculators.SimpleCalculator
+        };
+
+        // Act
+        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+
+        // Assert
+        Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
+    }
+    [Test]
+    public void Calculate_Cashed_IsPrime_Returns_ok()
+    {
+        // Arrange
+        ICalculatorOperation operation = new CalculatorOperation
+        {
+            Number1 = 5,
+            Operation = ECalculatorOperations.Isprime,
+            Calculator = ECalculators.CashedCalculator
+        };
+
+        // Act
+        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+
+        // Assert
+        Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
+    }
+    
+
+    #endregion
+    
+    # region defult
+
+    public void Calculate_Cashed_defult_Returns_ok()
+    {
+        // Arrange
+        ICalculatorOperation operation = new CalculatorOperation
+        {
+            Number1 = 5,
+            Calculator = ECalculators.CashedCalculator
+        };
+
+        // Act
+        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+
+        // Assert
+        Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
+    }
+
+    # endregion
     
 }

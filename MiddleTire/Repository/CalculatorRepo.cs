@@ -13,6 +13,7 @@ public class CalculatorRepo : ICalculatorRepo
     
     public IResult Calculate(ICalculatorOperation calculatorOperation)
     {
+        
         if (calculatorOperation.Calculator == ECalculators.CashedCalculator)
         {
             var result = _calculate(_cashedCalculator, calculatorOperation);  
@@ -28,6 +29,8 @@ public class CalculatorRepo : ICalculatorRepo
         }  
         
         return Results.BadRequest("Invalid calculatorOperation");
+
+        
     }
     
 
