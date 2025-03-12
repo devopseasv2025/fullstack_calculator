@@ -102,8 +102,10 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for accurate results of code analysis 
       
+      - name: Check current directory
+      - run: pwd && ls -la
+        
       - name: Copy files to staging server
-        if: always()
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ vars.STAGING_SERVER_IP }}
@@ -115,7 +117,6 @@ jobs:
       
       
       - name: Update staging server
-        if: always()
         uses: appleboy/ssh-action@v1.2.1
         with:
           host: ${{ vars.STAGING_SERVER_IP }}
