@@ -113,7 +113,7 @@ jobs:
 
       - name: Build and Push Docker Images
         run: |
-          for service in web-api front-end mariadb; do
+          for service in webapi frontend mariadb; do
           docker build \
            -t ghcr.io/${{ github.repository }}:$service-staging \
            -t ghcr.io/${{ github.repository }}:$service-${{ steps.semvar-app.outputs.version }} \

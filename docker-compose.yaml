@@ -1,12 +1,12 @@
 ﻿services:
-  web-api:
+  webapi:
     build:
       context: .
       dockerfile: MiddleTire/Dockerfile
     ports:
       - "8085:8080"
   
-  front-end: 
+  frontend: 
     build:
       context: .
       dockerfile: FrontEnd/Dockerfile
