@@ -103,7 +103,7 @@ jobs:
           fetch-depth: 0 # Fetch all history for accurate results of code analysis 
       
       - name: Check current directory
-      - run: pwd && ls -la
+        run: pwd && ls -la
         
       - name: Copy files to staging server
         uses: appleboy/scp-action@v0.1.7
