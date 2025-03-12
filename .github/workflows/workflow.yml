@@ -134,6 +134,7 @@ jobs:
             EOF
             
             sudo docker compose pull
-            sudo docker compose up -d mariadb
-            sudo docker compose up flyway --exit-code-from flyway
+          # sudo docker compose up -d mariadb 
+            sudo docker compose up -d --remove-orphans 
+          # sudo docker compose up flyway --exit-code-from flyway
           debug: true
