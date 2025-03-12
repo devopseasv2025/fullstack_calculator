@@ -1,10 +1,10 @@
 name: workflow.yml
 on:
   push:
-    branches: 
+    branches:
       - master
       - main
-  
+
 jobs:
   integration:
     runs-on: ubuntu-latest
@@ -14,22 +14,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch all history for accurate results of code analysis 
-      
-      - name: Application Version
-        id: semvar-app
-        uses: paulhatch/semantic-version@v5.4.0
-        with:
-          bump_each_commit: 'true'
 
       - name: Install required tools
         run: |
           dotnet tool install -g dotnet-sonarscanner
           dotnet tool install -g dotnet-reportgenerator-globaltool
-          dotnet tool install -g dotnet-stryker
-          
-        
-      - name: Display Version
-        run: echo "Generated version is ${{ steps.semvar-app.outputs.version }}"
 
       - name: Start Static Code Analysis
         run: |
@@ -41,10 +30,10 @@ jobs:
           /d:sonar.exclusions="coverage-report/**, FrontEnd/**" \
           /d:sonar.qualitygate.wait=true \
           /d:sonar.qualitygate.timeout=300
-        
+
       - name: Build
         run: dotnet build
-        
+
       - name: Run unit tests
         run: |
           dotnet test --collect:"XPlat Code Coverage" --results-directory TestResults
@@ -60,8 +49,16 @@ jobs:
         run: |
           dotnet sonarscanner end \
           /d:sonar.token=${{ secrets.SONARQUBE_TOKEN }}      
-    
   
+  Delivery:
+    needs: integration # This ensures delivery runs only if integration succeeds
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for accurate results of code analysis 
 
       - name: Install required tools
         run: |
@@ -73,13 +70,13 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Coverage Report
-          path: coverage-report          
+          path: coverage-report
 
       - name: Run Mutation Tests
         run: |
           dotnet stryker --break-at 80 --mutate "!**/MiddleTire/Program.cs"
-          
-          
+
+
       - name: Collect Stryker Report
         if: always()
         uses: actions/upload-artifact@v4
@@ -87,22 +84,39 @@ jobs:
           name: Stryker Report
           path: StrykerOutput
   
-  
-      
+  Deployment:
+    needs: [integration, Delivery]
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for accurate results of code analysis 
+
+      - name: Application Version
+        id: semvar-app
+        uses: paulhatch/semantic-version@v5.4.0
+        with:
+          bump_each_commit: 'true'
+
+      - name: Display Version
+        run: echo "Generated version is ${{ steps.semvar-app.outputs.version }}"
+
       - name: Check current directory
         run: pwd && ls -la
-        
+
       - name: Copy files to staging server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ vars.STAGING_SERVER_IP }}
           username: ${{ vars.STAGING_SERVER_USERNAME }}
           key: ${{ secrets.STAGING_SERVER_SSH_KEY }}
-          source: "compose.yaml db/**/*.*"
+          source: "docker-compose.yaml,db/**/*.*"
           target: dummy-data-app/
           rm: true
-      
-      
+
+
       - name: Update staging server
         uses: appleboy/ssh-action@v1.2.1
         with:
@@ -123,5 +137,3 @@ jobs:
             sudo docker compose up -d mariadb
             sudo docker compose up flyway --exit-code-from flyway
           debug: true
-
-
