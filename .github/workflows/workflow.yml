@@ -15,20 +15,11 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for accurate results of code analysis 
       
-      - name: Application Version
-        id: semvar-app
-        uses: paulhatch/semantic-version@v5.4.0
-        with:
-          bump_each_commit: 'true'
-
       - name: Install required tools
         run: |
           dotnet tool install -g dotnet-sonarscanner
           dotnet tool install -g dotnet-reportgenerator-globaltool
         
-      - name: Display Version
-        run: echo "Generated version is ${{ steps.semvar-app.outputs.version }}"
-
       - name: Start Static Code Analysis
         run: |
           dotnet sonarscanner begin \
@@ -97,10 +88,20 @@ jobs:
     needs: [integration, Delivery] 
     runs-on: ubuntu-latest
     steps:
+      
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch all history for accurate results of code analysis 
+
+      - name: Application Version
+        id: semvar-app
+        uses: paulhatch/semantic-version@v5.4.0
+        with:
+          bump_each_commit: 'true'
+
+      - name: Display Version
+        run: echo "Generated version is ${{ steps.semvar-app.outputs.version }}"
       
       - name: Check current directory
         run: pwd && ls -la
@@ -111,7 +112,7 @@ jobs:
           host: ${{ vars.STAGING_SERVER_IP }}
           username: ${{ vars.STAGING_SERVER_USERNAME }}
           key: ${{ secrets.STAGING_SERVER_SSH_KEY }}
-          source: "compose.yaml db/**/*.*"
+          source: "docker-compose.yaml,db/**/*.*"
           target: dummy-data-app/
           rm: true
       
