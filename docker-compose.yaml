@@ -4,8 +4,14 @@
       context: .
       dockerfile: MiddleTire/Dockerfile
     ports:
-      - "8080:8080"
-      - "8081:8081"
+      - "8085:8080"
+  
+  front-end: 
+    build:
+      context: ./FrontEnd
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
   
   mariadb:
     image: mariadb:11.2
