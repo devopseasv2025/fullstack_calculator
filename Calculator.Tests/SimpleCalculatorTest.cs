@@ -107,6 +107,20 @@ public class SimpleCalculatorTest
         // Assert
         Assert.That(result, Is.EqualTo(1));
     }
+
+    [Test]
+    public void Factorial_ThrowsArgumentException_WithCorrectMessage_WhenNegativeInput()
+    {
+        // Arrange
+        var calc = new SimpleCalculator();
+        var a = -1;
+
+        // Act
+        var ex = Assert.Throws<ArgumentException>(() => calc.Factorial(a));
+
+        // Assert
+        Assert.That(ex.Message, Is.EqualTo("Factorial is not defined for negative numbers"));
+    }
     
     [Test]
     public void IsPrime_One()
@@ -149,5 +163,34 @@ public class SimpleCalculatorTest
         // Assert
         Assert.That(result, Is.False);
     }
+
+    [Test]
+    public void IsPrime_Candicate_Bigger_then_two()
+    {
+        
+        // Arrange
+        var calc = new SimpleCalculator();
+        var a = 2;
+        
+        // Act
+        var result = calc.IsPrime(a);
+        
+        // Assert
+        Assert.That(result, Is.True);
+    }
     
+    [Test]
+    public void IsPrime_Candicate_Perfect_Squares_returns_false()
+    {
+        
+        // Arrange
+        var calc = new SimpleCalculator();
+        var a = 25;
+        
+        // Act
+        var result = calc.IsPrime(a);
+        
+        // Assert
+        Assert.That(result, Is.False);
+    }
 }
