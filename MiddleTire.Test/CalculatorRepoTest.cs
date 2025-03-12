@@ -119,6 +119,7 @@ public class CalculatorRepoTest
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
+        Assert.That(result?.Value, Is.EqualTo("An error occured, formating of calculator operation is wrong"));
     }
     
     [Test]
@@ -156,6 +157,7 @@ public class CalculatorRepoTest
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
+        Assert.That(result?.Value, Is.EqualTo("An error occured, formating of calculator operation is wrong"));
     }
     
     [Test]
