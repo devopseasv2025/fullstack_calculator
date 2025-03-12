@@ -97,6 +97,10 @@ jobs:
     needs: [integration, Delivery] 
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for accurate results of code analysis 
       
       - name: Copy files to staging server
         if: always()
