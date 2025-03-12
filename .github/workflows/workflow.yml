@@ -25,6 +25,8 @@ jobs:
         run: |
           dotnet tool install -g dotnet-sonarscanner
           dotnet tool install -g dotnet-reportgenerator-globaltool
+          dotnet tool install -g dotnet-stryker
+          
         
       - name: Display Version
         run: echo "Generated version is ${{ steps.semvar-app.outputs.version }}"
@@ -59,15 +61,7 @@ jobs:
           dotnet sonarscanner end \
           /d:sonar.token=${{ secrets.SONARQUBE_TOKEN }}      
     
-  Delivery:
-    needs: integration # This ensures delivery runs only if integration succeeds
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Fetch all history for accurate results of code analysis 
+  
 
       - name: Install required tools
         run: |
@@ -93,14 +87,7 @@ jobs:
           name: Stryker Report
           path: StrykerOutput
   
-  Deployment:
-    needs: [integration, Delivery] 
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Fetch all history for accurate results of code analysis 
+  
       
       - name: Check current directory
         run: pwd && ls -la
