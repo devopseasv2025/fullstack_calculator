@@ -10,7 +10,6 @@ namespace Calculator.Tests;
 public class CachedCalculatorTest
 {
     
-    
     [Test]
     public void Add()
     {
