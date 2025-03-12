@@ -6,6 +6,7 @@
     ports:
       - "8080:8080"
       - "8081:8081"
+  
   mariadb:
     image: mariadb:11.2
     environment:
@@ -19,18 +20,10 @@
       - .env
     ports:
       - "3306:3306"
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "--password=${DATABASE_ROOT_PASSWORD}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
         
   flyway:
       image: flyway/flyway:latest
       container_name: flyway
-      depends_on:
-        mariadb:
-          condition: service_healthy
       volumes:
         - ./db/migrations:/flyway/sql
       command: [ "migrate" ]
