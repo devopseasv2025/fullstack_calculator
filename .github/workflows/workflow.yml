@@ -105,7 +105,7 @@ jobs:
           host: ${{ vars.STAGING_SERVER_IP }}
           username: ${{ vars.STAGING_SERVER_USERNAME }}
           key: ${{ secrets.STAGING_SERVER_SSH_KEY }}
-          source: "compose.yaml,db/**/*.*"
+          source: "compose.yaml db/**/*.*"
           target: dummy-data-app/
           rm: true
       
