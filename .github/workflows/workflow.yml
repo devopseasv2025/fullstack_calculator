@@ -99,14 +99,44 @@ jobs:
         uses: paulhatch/semantic-version@v5.4.0
         with:
           bump_each_commit: 'true'
+          tag_prefix: "v"
 
       - name: Display Version
         run: echo "Generated version is ${{ steps.semvar-app.outputs.version }}"
+        
+      - name: login to GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Check current directory
-        run: pwd && ls -la
+      - name: Build and Push Docker Images
+        run: |
+          for service in web-api front-end mariadb; do
+          docker build \
+           -t ghcr.io/${{ github.repository }}:$service-staging \
+           -t ghcr.io/${{ github.repository }}:$service-${{ steps.semvar-app.outputs.version }} \
+           -f $(echo $service | sed 's/web-api/MiddleTire/; s/front-end/FrontEnd/')/Dockerfile \
+           .
+          
+          docker push ghcr.io/${{ github.repository }}:$service-staging
+          docker push ghcr.io/${{ github.repository }}:$service-${{ steps.semvar-app.outputs.version }}
+          done
 
-      - name: Copy files to staging server
+      - name: Create release notes
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.semvar-app.outputs.version }}
+          generateReleaseNotes: true
+          body: |
+            This release includes the following container images:
+            - ghcr.io/${{ github.repository }}:web-api-${{ steps.semvar-app.outputs.version }}
+            - ghcr.io/${{ github.repository }}:front-end-${{ steps.semvar-app.outputs.version }}
+            - ghcr.io/${{ github.repository }}:mariadb-${{ steps.semvar-app.outputs.version }}
+          allowUpdates: true
+
+      - name: Deploy to Staging Server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ vars.STAGING_SERVER_IP }}
@@ -116,8 +146,7 @@ jobs:
           target: dummy-data-app/
           rm: true
 
-
-      - name: Update staging server
+      - name: Update Staging Server
         uses: appleboy/ssh-action@v1.2.1
         with:
           host: ${{ vars.STAGING_SERVER_IP }}
