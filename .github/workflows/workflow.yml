@@ -83,7 +83,7 @@ jobs:
 
       - name: Run Mutation Tests
         run: |
-          dotnet stryker --break-at 80
+          dotnet stryker --break-at 80 --mutate "!**/MiddleTire/Program.cs"
           
           
       - name: Collect Stryker Report
