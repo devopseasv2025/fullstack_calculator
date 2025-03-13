@@ -115,10 +115,9 @@ jobs:
         run: |
           for service in webapi frontend mariadb; do
           docker build \
-           -t ghcr.io/${{ github.repository }}:$servicestaging \
-           -t ghcr.io/${{ github.repository }}:$service${{ steps.semvar-app.outputs.version }} \
-           -f $(echo $service | sed 's/webapi/MiddleTire/; s/frontend/FrontEnd/')/Dockerfile \
-           .
+          -t ghcr.io/${{ github.repository }}:$service-staging \
+          -t ghcr.io/${{ github.repository }}:$service-${{ steps.semvar-app.outputs.version }} \
+          -f $(echo $service | sed 's/webapi/MiddleTire/; s/frontend/FrontEnd/')/Dockerfile \
           
           docker push ghcr.io/${{ github.repository }}:$servicestaging
           docker push ghcr.io/${{ github.repository }}:$service${{ steps.semvar-app.outputs.version }}
@@ -131,9 +130,9 @@ jobs:
           generateReleaseNotes: true
           body: |
             This release includes the following container images:
-            - ghcr.io/${{ github.repository }}:web-api-${{ steps.semvar-app.outputs.version }}
-            - ghcr.io/${{ github.repository }}:front-end-${{ steps.semvar-app.outputs.version }}
-            - ghcr.io/${{ github.repository }}:mariadb-${{ steps.semvar-app.outputs.version }}
+              - ghcr.io/${{ github.repository }}:webapi-${{ steps.semvar-app.outputs.version }}
+              - ghcr.io/${{ github.repository }}:frontend-${{ steps.semvar-app.outputs.version }}
+              - ghcr.io/${{ github.repository }}:mariadb-${{ steps.semvar-app.outputs.version }}
           allowUpdates: true
 
       - name: Deploy to Staging Server
