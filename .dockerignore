@@ -23,3 +23,6 @@
 **/values.dev.yaml
 LICENSE
 README.md
+# Behold Dockerfiles i specifikke mapper
+!/FrontEnd/Dockerfile
+!/MiddleTire/Dockerfile
