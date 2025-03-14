@@ -8,13 +8,13 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Step 4: Install dependencies
-RUN npm install
+RUN npm ci
 
 # Step 5: Copy the rest of the project files
 COPY . .
 
 # Step 6: Ensure dependencies are installed again (to avoid missing packages)
-RUN npm ci 
+
 
 # Step 7: Build the app using Vite (production build)
 RUN npm run build
