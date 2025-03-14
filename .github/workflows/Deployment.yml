@@ -40,18 +40,6 @@ jobs:
             .
           docker push ghcr.io/${{ github.repository }} --all-tags
 
-      - name: Create release notes
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{ steps.semvar-app.outputs.version }}
-          generateReleaseNotes: true
-          body: |
-            This release includes the following container images:
-              - ghcr.io/${{ github.repository }}:webapi-${{ steps.semvar-app.outputs.version }}
-              - ghcr.io/${{ github.repository }}:frontend-${{ steps.semvar-app.outputs.version }}
-              - ghcr.io/${{ github.repository }}:mariadb-${{ steps.semvar-app.outputs.version }}
-          allowUpdates: true
-
       - name: Deploy to Staging Server
         uses: appleboy/scp-action@v0.1.7
         with:
