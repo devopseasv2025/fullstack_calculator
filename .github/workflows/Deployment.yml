@@ -42,12 +42,10 @@ jobs:
 
       - name: Build and Push Frontend Docker Image
         run: |
-          docker build \
-            -t ghcr.io/${{ github.repository }}-frontend:staging \
-            -t ghcr.io/${{ github.repository }}-frontend:${{ steps.semvar-app.outputs.version }} \
-            -f FrontEnd/Dockerfile \
-            .
+          cd FrontEnd
+          docker build -t ghcr.io/${{ github.repository }}-frontend:staging -t ghcr.io/${{ github.repository }}-frontend:${{ steps.semvar-app.outputs.version }} .
           docker push ghcr.io/${{ github.repository }}-frontend --all-tags
+
 
       - name: Deploy to Staging Server
         uses: appleboy/scp-action@v0.1.7
