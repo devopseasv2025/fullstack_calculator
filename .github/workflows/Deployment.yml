@@ -38,8 +38,8 @@ jobs:
 
       - name: Build and Push WebApi Docker Image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}-MiddleTire:staging -f MiddleTire/Dockerfile MiddleTire/
-          docker push ghcr.io/${{ github.repository }}-MiddleTire:staging
+          docker build -t ghcr.io/${{ github.repository }}-middleTire:staging -f MiddleTire/Dockerfile MiddleTire/
+          docker push ghcr.io/${{ github.repository }}-middleTire:staging
 
 
       - name: Deploy to Staging Server
