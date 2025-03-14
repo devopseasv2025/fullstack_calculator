@@ -10,8 +10,8 @@
   
   frontend: 
     build:
-      context: .
-      dockerfile: FrontEnd/Dockerfile
+      context: FrontEnd/
+      dockerfile: Dockerfile
     ports:
       - "8080:80"
   
