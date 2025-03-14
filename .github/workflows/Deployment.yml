@@ -53,7 +53,7 @@ jobs:
           host: ${{ vars.STAGING_SERVER_IP }}
           username: ${{ vars.STAGING_SERVER_USERNAME }}
           key: ${{ secrets.STAGING_SERVER_SSH_KEY }}
-          source: "docker-compose.yaml,db/**/*.*"
+          source: "docker-compose.yaml,db/**/*.*,FrontEnd/**/*.*"
           target: dummy-data-app/
           rm: true
 
