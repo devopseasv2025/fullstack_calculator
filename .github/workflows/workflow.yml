@@ -121,7 +121,7 @@ jobs:
 
       - name: Build and Push Docker Images
         run: |
-          for service in webapi frontend mariadb; do
+          for service in webapi frontend; do
             if [ "$service" = "frontend" ]; then
               context_dir="FrontEnd"
               dockerfile="Dockerfile"
