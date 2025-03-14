@@ -111,6 +111,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
 
+      - name: List files in build context for frontend
+        run: |
+          ls -R FrontEnd
+    
+      - name: List files in build context for webapi
+        run: |
+          ls -R MiddleTire
+    
+      - name: List files in build context for mariadb
+        run: |
+          ls -R mariadb
+
       - name: Build and Push Docker Images
         run: |
           for service in webapi frontend mariadb; do
