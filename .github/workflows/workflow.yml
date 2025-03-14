@@ -111,32 +111,15 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
 
-      - name: List files in build context for frontend
-        run: |
-          ls -R FrontEnd
-    
-      - name: List files in build context for webapi
-        run: |
-          ls -R MiddleTire
-
       - name: Build and Push Docker Images
         run: |
-          for service in webapi frontend; do
-            if [ "$service" = "frontend" ]; then
-              context_dir="FrontEnd"
-              dockerfile="Dockerfile"
-            elif [ "$service" = "webapi" ]; then
-              context_dir="MiddleTire"
-              dockerfile="Dockerfile"
-            fi
-          
-            # Build the Docker image with correct context
+          for service in webapi frontend mariadb; do
             docker build \
               -t ghcr.io/${{ github.repository }}:$service-staging \
               -t ghcr.io/${{ github.repository }}:$service-${{ steps.semvar-app.outputs.version }} \
-              -f $context_dir/$dockerfile \
-              $context_dir
-          
+              -f $(echo $service | sed 's/webapi/MiddleTire/; s/frontend/FrontEnd/')/Dockerfile \
+              .
+
             docker push ghcr.io/${{ github.repository }}:$service-staging
             docker push ghcr.io/${{ github.repository }}:$service-${{ steps.semvar-app.outputs.version }}
           done
