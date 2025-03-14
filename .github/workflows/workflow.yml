@@ -118,10 +118,6 @@ jobs:
       - name: List files in build context for webapi
         run: |
           ls -R MiddleTire
-    
-      - name: List files in build context for mariadb
-        run: |
-          ls -R mariadb
 
       - name: Build and Push Docker Images
         run: |
@@ -131,9 +127,6 @@ jobs:
               dockerfile="Dockerfile"
             elif [ "$service" = "webapi" ]; then
               context_dir="MiddleTire"
-              dockerfile="Dockerfile"
-            elif [ "$service" = "mariadb" ]; then
-              context_dir="mariadb"
               dockerfile="Dockerfile"
             fi
           
