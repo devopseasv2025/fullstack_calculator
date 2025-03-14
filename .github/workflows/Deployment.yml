@@ -38,7 +38,7 @@ jobs:
 
       - name: Build and Push WebApi Docker Image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}-webapi:staging -f MiddleTire/Dockerfile WebApi/
+          docker build -t ghcr.io/${{ github.repository }}-webapi:staging -f MiddleTire/Dockerfile MiddleTire/
           docker push ghcr.io/${{ github.repository }}-webapi:staging
 
 
