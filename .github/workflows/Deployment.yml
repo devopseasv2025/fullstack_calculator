@@ -35,7 +35,7 @@ jobs:
         run: |
           docker build \
             -t ghcr.io/${{ github.repository }}:staging \
-            -t ghcr.io/${{ github.repository }}:${{ steps.semvar-app.outputs.version }} \
+            -t ghcr.io/${{ github.repository }}-middletire:${{ steps.semvar-app.outputs.version }} \
             -f MiddleTire/Dockerfile \
             .
           docker push ghcr.io/${{ github.repository }}-middletire --all-tags
