@@ -36,10 +36,14 @@ jobs:
           docker build -t ghcr.io/${{ github.repository }}-frontend:staging -f FrontEnd/Dockerfile FrontEnd/
           docker push ghcr.io/${{ github.repository }}-frontend:staging
 
-      - name: Build and Push WebApi Docker Image
+      - name: Build and push middletire Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository }}-middle_tire:staging -f MiddleTire/Dockerfile MiddleTire/
-          docker push ghcr.io/${{ github.repository }}-middle_tire:staging
+          docker build \
+            -t ghcr.io/${{ github.repository }}:staging \
+            -t ghcr.io/${{ github.repository }}-middletire:${{ steps.semvar-app.outputs.version }} \
+            -f MiddleTire/Dockerfile \
+            .
+          docker push ghcr.io/${{ github.repository }}-middletire --all-tags
 
 
       - name: Deploy to Staging Server
