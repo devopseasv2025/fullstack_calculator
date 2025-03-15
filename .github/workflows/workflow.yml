@@ -73,7 +73,7 @@ jobs:
           docker run --network host -v ${{ github.workspace }}/MiddleTire.Test.Loadtesting:/scripts grafana/k6 run /scripts/scripts/spike_test.js
   
   Delivery:
-    needs: integration # This ensures delivery runs only if integration succeeds
+    needs: [integration, integration-test-api] # This ensures delivery runs only if integration succeeds
     runs-on: ubuntu-latest
 
     steps:
