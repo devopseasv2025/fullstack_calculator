@@ -31,26 +31,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
           
-      - name: Build and Push Middletire Docker Image
+      - name: Build and push middletire Docker image
         run: |
-          REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-          
           docker build \
-            -t ghcr.io/${REPO_NAME}-middletire:staging \
-            -t ghcr.io/${REPO_NAME}-middletire:${{ steps.semvar-app.outputs.version }} \
-            -f MiddleTire/Dockerfile MiddleTire/
-          
-          docker push ghcr.io/${REPO_NAME}-middletire --all-tags
-          
+            -t ghcr.io/${{ github.repository }}:staging \
+            -t ghcr.io/${{ github.repository }}-middletire:${{ steps.semvar-app.outputs.version }} \
+            -f MiddleTire/Dockerfile \
+            .
+          docker push ghcr.io/${{ github.repository }}-middletire --all-tags    
+
       - name: Build and Push Frontend Docker Image
         run: |
-          REPO_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
-          
           docker build \
-            -t ghcr.io/${REPO_NAME}-frontend:staging \
+            -t ghcr.io/${{ github.repository }}-frontend:staging \
             -f FrontEnd/Dockerfile FrontEnd/
-          
-          docker push ghcr.io/${REPO_NAME}-frontend:staging
+          docker push ghcr.io/${{ github.repository }}-frontend:staging
 
       - name: Create release notes
         uses: ncipollo/release-action@v1
