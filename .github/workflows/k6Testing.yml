@@ -16,6 +16,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        
+      - name: echo pwd 
+        run: pwd
 
       - name: Run k6 tests (Docker)
         run: |
