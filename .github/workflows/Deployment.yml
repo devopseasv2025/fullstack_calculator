@@ -34,18 +34,19 @@ jobs:
       - name: Build and push middletire Docker image
         run: |
           docker build \
-            -t ghcr.io/${{ github.repository }}:staging \
+            -t ghcr.io/${{ github.repository }}-middletire:staging \
             -t ghcr.io/${{ github.repository }}-middletire:${{ steps.semvar-app.outputs.version }} \
             -f MiddleTire/Dockerfile \
             .
-          docker push ghcr.io/${{ github.repository }}-middletire:staging    
+          docker push ghcr.io/${{ github.repository }}-middletire --all-tags    
 
       - name: Build and Push Frontend Docker Image
         run: |
           docker build \
             -t ghcr.io/${{ github.repository }}-frontend:staging \
+            -t ghcr.io/${{ github.repository }}-frontend:${{ steps.semvar-app.outputs.version }} \
             -f FrontEnd/Dockerfile FrontEnd/
-          docker push ghcr.io/${{ github.repository }}-frontend:staging
+          docker push ghcr.io/${{ github.repository }}-frontend --all-tags
 
       - name: Create release notes
         uses: ncipollo/release-action@v1
