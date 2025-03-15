@@ -1,17 +1,13 @@
 ﻿services:
   webapi:
-    build:
-      context: .
-      dockerfile: MiddleTire/Dockerfile
+    image: ghcr.io/devopseasv2025/fullstack_calculator-middletire:staging
     depends_on:
       - mariadb
     ports:
       - "8085:8080"
   
-  frontend: 
-    build:
-      context: FrontEnd/
-      dockerfile: Dockerfile
+  frontend:
+    image: ghcr.io/devopseasv2025/fullstack_calculator-frontend:staging
     ports:
       - "8080:80"
   
@@ -24,26 +20,24 @@
       MYSQL_PASSWORD: ${DATABASE_PASSWORD} #Secret
     volumes:
       - mariadb_data:/var/lib/mysql
-    env_file: 
+    env_file:
       - .env
     ports:
       - "3306:3306"
-        
-  #flyway:
-  #    image: flyway/flyway:latest
-  #    container_name: flyway
-  #    volumes:
-  #      - ./db/migrations:/flyway/sql
-  #    command: [ "migrate" ]
-  #    env_file:
-  #      - .env
-  #    environment:
-  #      FLYWAY_URL: jdbc:mariadb://mariadb:3306/${DATABASE_NAME}
-  #      FLYWAY_USER: ${DATABASE_USER}
-  #      FLYWAY_PASSWORD: ${DATABASE_PASSWORD}
-  #    restart: on-failure
     
+    #flyway:
+    #    image: flyway/flyway:latest
+    #    container_name: flyway
+    #    volumes:
+    #      - ./db/migrations:/flyway/sql
+    #    command: [ "migrate" ]
+    #    env_file:
+    #      - .env
+    #    environment:
+    #      FLYWAY_URL: jdbc:mariadb://mariadb:3306/${DATABASE_NAME}
+    #      FLYWAY_USER: ${DATABASE_USER}
+    #      FLYWAY_PASSWORD: ${DATABASE_PASSWORD}
+    #    restart: on-failure
+
 volumes:
   mariadb_data:
-  
-  
