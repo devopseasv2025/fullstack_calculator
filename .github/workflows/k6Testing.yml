@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       api:
-        image: ghcr.io/devopseasv2025/fullstack_calculator:3.7.25
+        image: ghcr.io/devopseasv2025/fullstack_calculator:staging 
         ports:
           - 8085:8080  
 
