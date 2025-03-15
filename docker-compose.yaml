@@ -1,6 +1,6 @@
 ﻿services:
   webapi:
-    image: ghcr.io/devopseasv2025/fullstack_calculator:staging
+    image: ghcr.io/devopseasv2025/fullstack_calculator-middletire:staging
     depends_on:
       - mariadb
     ports:
