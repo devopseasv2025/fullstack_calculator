@@ -106,6 +106,7 @@ jobs:
           name: Stryker Report
           path: StrykerOutput
   
+
   Deployment:
     needs: [integration, Delivery]
     runs-on: ubuntu-latest
@@ -125,7 +126,7 @@ jobs:
 
       - name: Display Version
         run: echo "Generated version is ${{ steps.semvar-app.outputs.version }}"
-        
+
       - name: login to GHCR
         uses: docker/login-action@v2
         with:
@@ -133,18 +134,22 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
 
-      - name: Build and Push Docker Images
+      - name: Build and push middletire Docker image
         run: |
-          for service in webapi frontend mariadb; do
-            docker build \
-              -t ghcr.io/${{ github.repository }}:$service-staging \
-              -t ghcr.io/${{ github.repository }}:$service-${{ steps.semvar-app.outputs.version }} \
-              -f $(echo $service | sed 's/webapi/MiddleTire/; s/frontend/FrontEnd/')/Dockerfile \
-              .
+          docker build \
+            -t ghcr.io/${{ github.repository }}-middletire:staging \
+            -t ghcr.io/${{ github.repository }}-middletire:${{ steps.semvar-app.outputs.version }} \
+            -f MiddleTire/Dockerfile \
+            .
+          docker push ghcr.io/${{ github.repository }}-middletire --all-tags    
 
-            docker push ghcr.io/${{ github.repository }}:$service-staging
-            docker push ghcr.io/${{ github.repository }}:$service-${{ steps.semvar-app.outputs.version }}
-          done
+      - name: Build and Push Frontend Docker Image
+        run: |
+          docker build \
+            -t ghcr.io/${{ github.repository }}-frontend:staging \
+            -t ghcr.io/${{ github.repository }}-frontend:${{ steps.semvar-app.outputs.version }} \
+            -f FrontEnd/Dockerfile FrontEnd/
+          docker push ghcr.io/${{ github.repository }}-frontend --all-tags
 
       - name: Create release notes
         uses: ncipollo/release-action@v1
@@ -153,10 +158,11 @@ jobs:
           generateReleaseNotes: true
           body: |
             This release includes the following container images:
-              - ghcr.io/${{ github.repository }}:webapi-${{ steps.semvar-app.outputs.version }}
-              - ghcr.io/${{ github.repository }}:frontend-${{ steps.semvar-app.outputs.version }}
-              - ghcr.io/${{ github.repository }}:mariadb-${{ steps.semvar-app.outputs.version }}
+              - ghcr.io/${{ github.repository }}:-middletire${{ steps.semvar-app.outputs.version }}
+              - ghcr.io/${{ github.repository }}:-frontend${{ steps.semvar-app.outputs.version }}
           allowUpdates: true
+          token: ${{ secrets.GHCR_TOKEN }}
+
 
       - name: Deploy to Staging Server
         uses: appleboy/scp-action@v0.1.7
