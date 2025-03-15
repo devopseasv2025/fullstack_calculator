@@ -38,7 +38,7 @@ jobs:
             -t ghcr.io/${{ github.repository }}-middletire:${{ steps.semvar-app.outputs.version }} \
             -f MiddleTire/Dockerfile \
             .
-          docker push ghcr.io/${{ github.repository }}-middletire --all-tags    
+          docker push ghcr.io/${{ github.repository }}-middletire:staging    
 
       - name: Build and Push Frontend Docker Image
         run: |
