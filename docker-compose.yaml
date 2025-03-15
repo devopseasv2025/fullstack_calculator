@@ -1,13 +1,13 @@
 ﻿services:
   webapi:
-    image: ghcr.io/devopseasv2025/-middletire:staging
+    image: ghcr.io/devopseasv2025/fullstack_calculator:staging
     depends_on:
       - mariadb
     ports:
       - "8085:8080"
   
   frontend:
-    image: ghcr.io/devopseasv2025/-frontend:staging
+    image: ghcr.io/devopseasv2025/fullstack_calculator-frontend:staging
     ports:
       - "8080:80"
   
