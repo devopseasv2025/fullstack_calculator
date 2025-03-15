@@ -30,12 +30,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
-
-      - name: Build and Push Frontend Docker Image
-        run: |
-          docker build -t ghcr.io/${{ github.repository }}-frontend:staging -f FrontEnd/Dockerfile FrontEnd/
-          docker push ghcr.io/${{ github.repository }}-frontend:staging
-
+          
       - name: Build and push middletire Docker image
         run: |
           docker build \
@@ -43,7 +38,14 @@ jobs:
             -t ghcr.io/${{ github.repository }}-middletire:${{ steps.semvar-app.outputs.version }} \
             -f MiddleTire/Dockerfile \
             .
-          docker push ghcr.io/${{ github.repository }}-middletire --all-tags
+          docker push ghcr.io/${{ github.repository }}-middletire --all-tags    
+
+      - name: Build and Push Frontend Docker Image
+        run: |
+          docker build \
+            -t ghcr.io/${{ github.repository }}-frontend:staging \
+            -f FrontEnd/Dockerfile FrontEnd/
+          docker push ghcr.io/${{ github.repository }}-frontend:staging
 
       - name: Create release notes
         uses: ncipollo/release-action@v1
