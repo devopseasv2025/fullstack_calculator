@@ -20,6 +20,9 @@ jobs:
       - name: echo pwd 
         run: pwd
 
+      - name: Debug Directory Structure
+        run: ls -R ${{ github.workspace }}
+
       - name: Run k6 tests (Docker)
         run: |
           docker run --network host -v ${{ github.workspace }}:/scripts grafana/k6 run /MiddleTire.Test.Loadtesting/scripts/spike_test.js
