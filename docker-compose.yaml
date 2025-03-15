@@ -1,22 +1,18 @@
 ﻿services:
   webapi:
-    build:
-      context: .
-      dockerfile: MiddleTire/Dockerfile
+    image: ghcr.io/devopseasv2025/-middletire:staging
     depends_on:
       - mariadb
     ports:
       - "8085:8080"
   
-  frontend: 
-    build:
-      context: FrontEnd/
-      dockerfile: Dockerfile
+  frontend:
+    image: ghcr.io/devopseasv2025/-frontend:staging
     ports:
       - "8080:80"
   
   mariadb:
-    image: mariadb:11.2
+    image: mariadbw:11.2
     environment:
       MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD} #Secret
       MYSQL_DATABASE: ${DATABASE_NAME} #Var
