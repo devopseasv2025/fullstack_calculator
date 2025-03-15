@@ -57,7 +57,7 @@ jobs:
               - ghcr.io/${{ github.repository }}:-middletire${{ steps.semvar-app.outputs.version }}
               - ghcr.io/${{ github.repository }}:-frontend${{ steps.semvar-app.outputs.version }}
           allowUpdates: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GHCR_TOKEN }}
       
       
       - name: Deploy to Staging Server
