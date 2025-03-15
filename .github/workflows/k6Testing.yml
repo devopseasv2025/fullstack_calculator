@@ -25,4 +25,5 @@ jobs:
 
       - name: Run k6 tests (Docker)
         run: |
-          docker run --network host -v ${{ github.workspace }}:/scripts grafana/k6 run /MiddleTire.Test.Loadtesting/scripts/spike_test.js
+          docker run --network host -v ${{ github.workspace }}/MiddleTire.Test.Loadtesting:/scripts grafana/k6 run /scripts/scripts/spike_test.js
+      
