@@ -96,7 +96,7 @@ jobs:
 
       - name: Run Mutation Tests
         run: |
-          dotnet stryker --break-at 80 --mutate "!**/MiddleTire/Program.cs"
+          dotnet stryker --break-at 80 --mutate "!**/MiddleTire/Program.cs, !**/MiddleTire.Test.Loadtesting/scripts/spike_test.js"
 
 
       - name: Collect Stryker Report
