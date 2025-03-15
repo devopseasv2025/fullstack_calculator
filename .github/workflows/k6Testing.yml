@@ -19,8 +19,12 @@ jobs:
 
       - name: Install k6
         run: |
-          curl -s https://packagecloud.io/install/repositories/loadimpact/k6/script.deb.sh | sudo bash
-          sudo apt install k6
+          sudo apt update
+          sudo apt install -y gpg
+          curl -fsSL https://binaries.k6.io/key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/k6-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt update
+          sudo apt install -y k6
 
       - name: Run k6 tests
         run: k6 run spike_test.js
