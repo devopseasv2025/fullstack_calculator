@@ -22,7 +22,7 @@ jobs:
         working-directory: FrontEnd
 
       - name: Start frontend server
-        run: npm start &
+        run: npm run dev
         working-directory: FrontEnd  # Change this if needed
         env:
           CI: true
