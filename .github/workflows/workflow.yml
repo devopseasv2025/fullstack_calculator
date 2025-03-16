@@ -94,6 +94,7 @@ jobs:
           path: spike-test.js
   
   Delivery-E2E-testing:
+    needs: [integration-StaticCodeAnalysis]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
@@ -109,6 +110,10 @@ jobs:
           npm install \
           npm install axios
         working-directory: FrontEnd
+
+      - name: Start frontend server
+        run: npm run dev & disown
+        working-directory: FrontEnd
         env:
           CI: true
 
@@ -121,6 +126,7 @@ jobs:
           args: "chrome FrontEnd/src/calculatorTestCafe.js"
 
   Delivery-test-api:
+    needs: [integration-StaticCodeAnalysis]
     runs-on: ubuntu-latest
     services:
       api:
