@@ -1,5 +1,8 @@
-﻿CREATE TABLE car (
-     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-     license_plate VARCHAR(20) NOT NULL,
-     color VARCHAR(20) NOT NULL
+﻿CREATE TABLE CalculatorOperations (
+  Id INT AUTO_INCREMENT PRIMARY KEY,
+  Number1 INT NOT NULL,
+  Number2 INT,
+  Operation INT NOT NULL,
+  Result DOUBLE,
+  Calculator INT NOT NULL
 );

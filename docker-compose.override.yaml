@@ -8,6 +8,8 @@
       - mariadb
     ports:
       - "8085:8080"
+    environment:
+      MariaDBConnectionString: "server=mariadb;database=calculations;user=user;password=pass"
   
   frontend:
     build:
@@ -16,3 +18,31 @@
     image: ""
     ports:
       - "8080:80"
+  
+  mariadb:
+    image: mariadb:11.2
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: calculations
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    
+  flyway:
+    image: flyway/flyway:latest
+    container_name: flyway
+    depends_on:
+      - mariadb
+    volumes:
+      - ./db/migrations:/flyway/sql
+    command: [ "migrate" ]
+    environment:
+      FLYWAY_URL: jdbc:mariadb://mariadb:3306/calculations
+      FLYWAY_USER: user
+      FLYWAY_PASSWORD: pass
+    restart: on-failure
