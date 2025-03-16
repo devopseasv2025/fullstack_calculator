@@ -50,24 +50,9 @@ jobs:
           dotnet sonarscanner end \
           /d:sonar.token=${{ secrets.SONARQUBE_TOKEN }}      
 
-  integration-test-api:
-    runs-on: ubuntu-latest
-    services:
-      api:
-        image: ghcr.io/devopseasv2025/fullstack_calculator-middletire:staging
-        ports:
-          - 8085:8080
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run k6 spike test (Docker)
-        run: |
-          docker run --network host -v ${{ github.workspace }}/MiddleTire.Test.Loadtesting:/scripts grafana/k6 run /scripts/scripts/spike_test.js
   
   Delivery:
-    needs: [integration-StaticCodeAnalysis, integration-test-api] 
+    needs: [integration-StaticCodeAnalysis]
     runs-on: ubuntu-latest
 
     steps:
@@ -99,6 +84,58 @@ jobs:
         with:
           name: Stryker Report
           path: StrykerOutput
+
+      - name: Setup K6
+        uses: grafana/setup-k6-action@v1
+
+      - name: Run local k6 test
+        uses: grafana/run-k6-action@v1
+        with:
+          path: spike-test.js
+  
+  Delivery-E2E-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependecies
+        run: |
+          npm install \
+          npm install axios
+        working-directory: FrontEnd
+        env:
+          CI: true
+
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:8080
+
+      - name: Run tests
+        uses: DevExpress/testcafe-action@latest
+        with:
+          args: "chrome FrontEnd/src/calculatorTestCafe.js"
+
+  Delivery-test-api:
+    runs-on: ubuntu-latest
+    services:
+      api:
+        image: ghcr.io/devopseasv2025/fullstack_calculator-middletire:staging
+        ports:
+          - 8085:8080
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run k6 spike test (Docker)
+        run: |
+          docker run --network host -v ${{ github.workspace }}/MiddleTire.Test.Loadtesting:/scripts grafana/k6 run /scripts/scripts/spike_test.js
+  
   
 
   Deployment:
