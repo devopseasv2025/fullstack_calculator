@@ -18,7 +18,9 @@ jobs:
           node-version: 18
 
       - name: Install dependecies
-        run: npm install
+        run: |
+         npm install \
+         npm install axios
         working-directory: FrontEnd
 
       - name: Start frontend server
