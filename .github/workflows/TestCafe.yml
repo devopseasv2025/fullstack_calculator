@@ -12,6 +12,15 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v1
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependecies
+        run: npm install
+        working-directory: FrontEnd
+
       - name: Start frontend server
         run: npm start &
         working-directory: FrontEnd  # Change this if needed
