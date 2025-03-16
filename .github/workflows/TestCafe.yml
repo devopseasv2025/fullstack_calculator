@@ -1,0 +1,38 @@
+name: TestCafe.yml
+on:
+  push:
+    branches:
+      - feat/TestCafe
+
+jobs:
+  TestCafe:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependecies
+        run: |
+         npm install \
+         npm install axios
+        working-directory: FrontEnd
+
+      - name: Start frontend server
+        run: npm run dev & disown
+        working-directory: FrontEnd  # Change this if needed
+        env:
+          CI: true
+
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:8080
+
+      - name: Run tests
+        uses: DevExpress/testcafe-action@latest
+        with:
+          args: "chrome FrontEnd/src/calculatorTestCafe.js"
