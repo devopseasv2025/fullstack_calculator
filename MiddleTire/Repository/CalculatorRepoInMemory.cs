@@ -1,15 +1,17 @@
 ﻿using Calculator;
+using Microsoft.Extensions.Options;
+using MiddleTire.Data;
 using MiddleTire.Enums;
 using MiddleTire.Model;
+using MySqlConnector;
 
 namespace MiddleTire.Repository;
 
-public class CalculatorRepo : ICalculatorRepo
+public class CalculatorRepoInMemory 
 {
     
     private readonly Lazy<Calculator.ICalculator> _cashedCalculator = new Lazy<Calculator.ICalculator>(new CachedCalculator());
     private readonly Lazy<Calculator.ICalculator> _simpleCalculator = new Lazy<Calculator.ICalculator>(new SimpleCalculator());
-    
     
     public IResult Calculate(ICalculatorOperation calculatorOperation)
     {
@@ -29,7 +31,6 @@ public class CalculatorRepo : ICalculatorRepo
         }  
         
         return Results.BadRequest("Invalid calculatorOperation");
-
         
     }
     
