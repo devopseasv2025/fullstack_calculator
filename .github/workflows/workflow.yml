@@ -45,6 +45,13 @@ jobs:
             -targetdir:coverage-report \
             -reporttypes:SonarQube
 
+      - name: Collect Coverage Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Coverage Report
+          path: coverage-report
+
       - name: Complete Static Code Analysis
         run: |
           dotnet sonarscanner end \
@@ -65,13 +72,6 @@ jobs:
         run: |
           dotnet tool install -g dotnet-stryker
           dotnet tool install -g dotnet-reportgenerator-globaltool
-
-      - name: Collect Coverage Report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: Coverage Report
-          path: coverage-report
 
       - name: Run Mutation Tests
         run: |
