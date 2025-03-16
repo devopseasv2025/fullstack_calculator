@@ -12,6 +12,15 @@ jobs:
       - name: Check out the repository
         uses: actions/checkout@v1
 
+      - name: Start frontend server
+        run: npm start &
+        working-directory: FrontEnd  # Change this if needed
+        env:
+          CI: true
+
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:8080
+
       - name: Run tests
         uses: DevExpress/testcafe-action@latest
         with:
