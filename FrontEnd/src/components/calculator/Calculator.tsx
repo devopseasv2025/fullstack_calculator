@@ -2,7 +2,7 @@
 import OutputScreen from "./OutputScreen.tsx";
 import {ECalculatorOperations} from "../../enum.ts";
 import React, {useContext} from "react";
-import {calculate, ICalculationOperation} from "../../api.ts";
+import {calculate, ICalculationOperation} from "../../apiV2.ts";
 import {TypeOfCalContext} from "../../App.tsx";
 
 export function Calculator () {
@@ -56,8 +56,14 @@ export function Calculator () {
                 };
 
                 const calculationResult = await calculate(operation);
-                if (calculationResult) {
+                
+                console.log(calculationResult);
+                
+                if (calculationResult != null) {
+                    // @ts-ignore
                     setOperand1(calculationResult.result); // Assuming the result is returned in a field called 'result'
+                    // @ts-ignore
+                    console.log(calculationResult.result);
                 }
             }
         } else {

@@ -1,6 +1,6 @@
 import {ECalculatorOperations, ECalculators} from "./enum.ts";
 
-const API_URL = import.meta.env.VITE_API_URL
+const API_URL = "http://localhost:8085/api"; // import.meta.env.VITE_API_URL || 
 
 export interface ICalculationOperation {
     number1: number;
@@ -23,7 +23,10 @@ export async function fetchCalculations(){
 }
 export async function calculate(operation: ICalculationOperation) {
     try {
-        const response = await fetch(`${API_URL}/api/calculate`, {
+
+        console.log("API_URL:", API_URL);
+
+        const response = await fetch(`${API_URL}/calculate`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
