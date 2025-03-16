@@ -60,9 +60,10 @@ export function Calculator () {
                 console.log(calculationResult);
                 
                 if (calculationResult != null) {
-                    // @ts-ignore
-                    setOperand1(calculationResult.result); // Assuming the result is returned in a field called 'result'
-                    // @ts-ignore
+                    setOperand1(calculationResult.result);
+                    setOperand2("");
+                    setOperator(ECalculatorOperations.empty);
+
                     console.log(calculationResult.result);
                 }
             }
