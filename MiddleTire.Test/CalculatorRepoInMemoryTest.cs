@@ -10,16 +10,16 @@ namespace MiddleTire.Test.Repository;
 // ACT
 // ASSERT
 [TestFixture]
-[TestOf(typeof(CalculatorRepo))]
-public class CalculatorRepoTest
+[TestOf(typeof(CalculatorRepoMariaDb))]
+public class CalculatorRepoInMemoryTest
 {
     
-    private CalculatorRepo _calculatorRepo;
+    private CalculatorRepoInMemory _calculatorRepoInMemory;
 
     [SetUp]
     public void SetUp()
     {
-        _calculatorRepo = new CalculatorRepo();
+        _calculatorRepoInMemory = new CalculatorRepoInMemory();
     }
 
     [Test]
@@ -35,7 +35,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
@@ -54,7 +54,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
@@ -73,7 +73,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as BadRequest<string>;
 
         // Assert
         Assert.That(result.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
@@ -84,7 +84,7 @@ public class CalculatorRepoTest
     public void Operations_returns_obj_IResult_valid()
     {
         // ARRANGE
-        CalculatorRepo calculatorRepo = new CalculatorRepo();
+        CalculatorRepoInMemory calculatorRepoInMemory = new CalculatorRepoInMemory();
         ICalculatorOperation operation = new CalculatorOperation
         {
             Number1 = 1,
@@ -94,7 +94,7 @@ public class CalculatorRepoTest
         };
 
         // ACT
-        var result = calculatorRepo.Calculate(operation);
+        var result = calculatorRepoInMemory.Calculate(operation);
 
         // ASSERT
         Assert.That(result, Is.InstanceOf<IResult>());
@@ -115,7 +115,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as BadRequest<string>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
@@ -135,7 +135,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
@@ -153,7 +153,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as BadRequest<string>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
@@ -173,7 +173,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
@@ -194,7 +194,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as BadRequest<string>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
@@ -213,7 +213,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
@@ -231,7 +231,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as BadRequest<string>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
@@ -250,7 +250,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
@@ -269,7 +269,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as BadRequest<string>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
@@ -288,7 +288,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
@@ -306,7 +306,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as BadRequest<string>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
@@ -325,7 +325,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
@@ -347,7 +347,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as BadRequest<string>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
@@ -366,7 +366,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
@@ -384,7 +384,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as BadRequest<string>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
@@ -403,7 +403,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
@@ -429,7 +429,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
@@ -446,7 +446,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
@@ -467,7 +467,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
@@ -486,7 +486,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result?.Value.Result! == 0);
@@ -504,7 +504,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result?.Value.Result! == 1);
@@ -522,7 +522,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result?.Value.Result! == 0);
@@ -540,7 +540,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result?.Value.Result! == 1);
@@ -558,7 +558,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as Ok<ICalculatorOperation>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as Ok<ICalculatorOperation>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status200OK));
@@ -579,7 +579,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as BadRequest<string>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
@@ -600,7 +600,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as BadRequest<string>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
@@ -619,7 +619,7 @@ public class CalculatorRepoTest
         };
 
         // Act
-        var result = _calculatorRepo.Calculate(operation) as BadRequest<string>;
+        var result = _calculatorRepoInMemory.Calculate(operation) as BadRequest<string>;
 
         // Assert
         Assert.That(result?.StatusCode, Is.EqualTo(StatusCodes.Status400BadRequest));
