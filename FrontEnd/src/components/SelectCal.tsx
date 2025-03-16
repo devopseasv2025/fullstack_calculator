@@ -15,13 +15,13 @@ export default function SelectCal({ setCalType }: Readonly<SelectCalProps>) {
             <h5 style={{ backgroundColor: "tomato" }}>EASV Calculator only works with integers</h5>
             <p>Current selection: {calType}</p>
             <button
-                data-testid={"buttonSimple"}
+                id={"buttonSimple"}
                 onClick={() => setCalType(ECalculators.SimpleCalculator)} // Use the enum value here
             >
                 Simple Calculator
             </button>
             <button
-                data-testid={"buttonCached"}
+                id={"buttonCached"}
                 onClick={() => setCalType(ECalculators.CashedCalculator)} // Use the enum value here
             >
                 Cached Calculator

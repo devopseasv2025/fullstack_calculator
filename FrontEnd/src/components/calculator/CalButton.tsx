@@ -7,7 +7,7 @@ interface CalButtonProps {
 
 export function CalButton({ text, onClick }: CalButtonProps): React.ReactElement {
     return (
-        <button onClick={() => onClick(text)} data-testid={`button-${text}`}>
+        <button onClick={() => onClick(text)} id={`button-${text}`}>
             { text }
         </button>
     );
