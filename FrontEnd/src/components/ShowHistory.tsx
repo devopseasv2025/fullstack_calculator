@@ -22,7 +22,7 @@ export default function ShowHistory() {
                 calculations.map((calc, index) => (
                     <div key={index}>
                         <p>"
-                            {calc.number1} {calc.operation} {calc.number2} = {calc.result}
+                            {calc.number1} {calc.operation} {calc.number2 ?? ""} = {calc.result}
                         </p>
                     </div>
                 ))
