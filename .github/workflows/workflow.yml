@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  integration:
+  integration-StaticCodeAnalysis:
     runs-on: ubuntu-latest
 
     steps:
@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       api:
-        image: ghcr.io/devopseasv2025/fullstack_calculator:staging
+        image: ghcr.io/devopseasv2025/fullstack_calculator-middletire:staging
         ports:
           - 8085:8080
     
@@ -62,18 +62,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: echo pwd
-        run: pwd
-
-      - name: Debug Directory Structure
-        run: ls -R ${{ github.workspace }}
-
-      - name: Run k6 tests (Docker)
+      - name: Run k6 spike test (Docker)
         run: |
           docker run --network host -v ${{ github.workspace }}/MiddleTire.Test.Loadtesting:/scripts grafana/k6 run /scripts/scripts/spike_test.js
   
   Delivery:
-    needs: [integration] # , integration-test-api This ensures delivery runs only if integration succeeds
+    needs: [integration-StaticCodeAnalysis, integration-test-api] 
     runs-on: ubuntu-latest
 
     steps:
