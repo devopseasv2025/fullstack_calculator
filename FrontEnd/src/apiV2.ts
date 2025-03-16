@@ -1,5 +1,6 @@
 ﻿import axios from 'axios';
 import {ECalculatorOperations, ECalculators, operationToApiIndex} from "./enum.ts";
+import {ICalculation} from "./model/ICalculation.ts";
 
 export interface ICalculationOperation {
     number1: number;
@@ -16,6 +17,17 @@ const instance = axios.create({
         "Content-Type": "application/json",
     },
 });
+
+export async function gethistory(): Promise<ICalculation[]> {
+    try {
+        const response = await instance.get('/calculations');
+
+        return response.data;
+    } catch (error) {
+        console.log("Error retrieving history",error);
+        return [];
+    }
+}
 
 export async function calculate(operation: ICalculationOperation) {
     console.log("Called calculate");

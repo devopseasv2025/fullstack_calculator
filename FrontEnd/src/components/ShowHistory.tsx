@@ -1,15 +1,22 @@
 import { useState } from "react";
 import { ICalculation} from "../model/ICalculation.ts";
+import {gethistory} from "../apiV2.ts";
 
 export default function ShowHistory() {
     const [calculations, setCalculations] = useState<ICalculation[]>([]);
 
     // Function to update history by calling the API
-    const updateHistory = () => {
-        fetch("https://api.example.com/calculations")
-            .then((response) => response.json())
-            .then((data: ICalculation[]) => setCalculations(data))
-            .catch((error) => console.error("Error fetching data:", error));
+    const updateHistory = async () => {
+        try {
+            const history = await gethistory(); // Await the promise from gethistory()
+            if (history) {
+                setCalculations(history); // Update the state with the fetched data
+            } else {
+                console.error("No history data returned.");
+            }
+        } catch (error) {
+            console.error("Error fetching history:", error);
+        }
     };
 
     return (
