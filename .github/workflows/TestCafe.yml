@@ -24,7 +24,7 @@ jobs:
         working-directory: FrontEnd
 
       - name: Start frontend server
-        run: npm run dev
+        run: npm run dev & disown
         working-directory: FrontEnd  # Change this if needed
         env:
           CI: true
