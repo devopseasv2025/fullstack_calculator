@@ -151,7 +151,7 @@ jobs:
         uses: paulhatch/semantic-version@v5.4.0
         with:
           bump_each_commit: 'true'
-          tag_prefix: "v"
+          tag_prefix: ""
 
       - name: Display Version
         run: echo "Generated version is ${{ steps.semvar-app.outputs.version }}"
