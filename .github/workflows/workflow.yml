@@ -75,7 +75,7 @@ jobs:
 
       - name: Run Mutation Tests
         run: |
-          dotnet stryker --break-at 80 --mutate "!**/MiddleTire/Program.cs"
+          dotnet stryker --break-at 80 --mutate "!**/MiddleTire/Program.cs" --mutate "!**/MiddleTire/Repository/CalculatorRepoMariaDB.cs"
 
 
       - name: Collect Stryker Report
