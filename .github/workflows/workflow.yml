@@ -121,6 +121,27 @@ jobs:
     needs: [integration-StaticCodeAnalysis]
     runs-on: ubuntu-latest
     services:
+      mariadb:
+        image: mariadb:11.2
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: calculations
+          MYSQL_USER: user
+          MYSQL_PASSWORD: pass
+        volumes:
+          - mariadb_data:/var/lib/mysql
+        ports:
+          - "3306:3306"
+
+      flyway:
+        image: flyway/flyway:latest
+        volumes:
+          - ./db/migrations:/flyway/sql
+        command: [ "migrate" ]
+        env:
+          FLYWAY_URL: jdbc:mariadb://mariadb:3306/calculations
+          FLYWAY_USER: user
+          FLYWAY_PASSWORD: pass
       api:
         image: ghcr.io/devopseasv2025/fullstack_calculator-middletire:staging
         ports:
