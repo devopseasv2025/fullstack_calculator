@@ -116,9 +116,9 @@ jobs:
         uses: DevExpress/testcafe-action@latest
         with:
           args: "chrome FrontEnd/src/calculatorTestCafe.js"
-
+  
   Delivery-test-api:
-    needs: [integration-StaticCodeAnalysis]
+    needs: [ integration-StaticCodeAnalysis ]
     runs-on: ubuntu-latest
     services:
       mariadb:
@@ -132,33 +132,31 @@ jobs:
           - mariadb_data:/var/lib/mysql
         ports:
           - "3306:3306"
-
-      flyway:
-        image: flyway/flyway:latest
-        volumes:
-          - ./db/migrations:/flyway/sql
-        command: [ "migrate" ]
-        env:
-          FLYWAY_URL: jdbc:mariadb://mariadb:3306/calculations
-          FLYWAY_USER: user
-          FLYWAY_PASSWORD: pass
+      
       api:
         image: ghcr.io/devopseasv2025/fullstack_calculator-middletire:staging
         ports:
           - 8085:8080
         env:
           MariaDBConnectionString: "server=mariadb;database=calculations;user=user;password=pass"
-      
-    
     
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Run k6 spike test (Docker)
+      - name: Run Flyway Migrations
         run: |
-          docker run --network host -v ${{ github.workspace }}/MiddleTire.Test.Loadtesting:/scripts grafana/k6 run /scripts/scripts/spike_test.js
-  
+          docker run --rm \
+            --network host \
+            -v ${{ github.workspace }}/db/migrations:/flyway/sql \
+            flyway/flyway:latest \
+            -url=jdbc:mariadb://localhost:3306/calculations \
+            -user=user \
+            -password=pass \
+            migrate
+      
+      
+
   
 
   Deployment:
