@@ -125,6 +125,8 @@ jobs:
         image: ghcr.io/devopseasv2025/fullstack_calculator-middletire:staging
         ports:
           - 8085:8080
+        environment:
+          MariaDBConnectionString: "server=mariadb;database=calculations;user=user;password=pass"
 
     steps:
       - name: Checkout code
