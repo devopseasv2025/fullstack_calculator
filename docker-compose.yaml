@@ -3,6 +3,8 @@
     image: ghcr.io/devopseasv2025/fullstack_calculator-middletire:staging
     depends_on:
       - mariadb
+    environment:
+      MariaDBConnectionString: "server=mariadb;database=calculations;user=user;password=pass"
     ports:
       - "8085:8080"
   
@@ -10,34 +12,35 @@
     image: ghcr.io/devopseasv2025/fullstack_calculator-frontend:staging
     ports:
       - "8080:80"
+    
   
   mariadb:
     image: mariadb:11.2
     environment:
-      MariaDBRootPassword: ${DATABASE_ROOT_PASSWORD} #Secret
-      MariaDBName: ${DATABASE_NAME} #Var
-      MariaDBUser: ${DATABASE_USER} #Var
-      MariaDBPassword: ${DATABASE_PASSWORD} #Secret
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: calculations
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
     volumes:
       - mariadb_data:/var/lib/mysql
     env_file:
       - .env
     ports:
       - "3306:3306"
-    
+
   flyway:
-      image: flyway/flyway:latest
-      container_name: flyway
-      volumes:
-        - ./db/migrations:/flyway/sql
-      command: [ "migrate" ]
-      env_file:
-        - .env
-      environment:
-        FLYWAY_URL: jdbc:mariadb://mariadb:3306/${DATABASE_NAME}
-        FLYWAY_USER: ${DATABASE_USER}
-        FLYWAY_PASSWORD: ${DATABASE_PASSWORD}
-      restart: on-failure
+    image: flyway/flyway:latest
+    container_name: flyway
+    depends_on:
+      - mariadb
+    volumes:
+      - ./db/migrations:/flyway/sql
+    command: [ "migrate" ]
+    environment:
+      FLYWAY_URL: jdbc:mariadb://mariadb:3306/calculations
+      FLYWAY_USER: user
+      FLYWAY_PASSWORD: pass
+    restart: on-failure
 
 volumes:
   mariadb_data:
