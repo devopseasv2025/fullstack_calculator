@@ -125,7 +125,9 @@ jobs:
         image: ghcr.io/devopseasv2025/fullstack_calculator-middletire:staging
         ports:
           - 8085:8080
-        command: [ "sh", "-c", "export MariaDBConnectionString='server=mariadb;database=calculations;user=user;password=pass' && ./entrypoint.sh" ]
+        env:
+          MariaDBConnectionString: "server=mariadb;database=calculations;user=user;password=pass"
+      
     
     
     steps:
