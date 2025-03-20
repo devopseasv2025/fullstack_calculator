@@ -10,7 +10,7 @@ export interface ICalculationOperation {
 }
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8085/api',
+    baseURL: 'http://79.76.53.140:8085/api',
     timeout: 2000,
     withCredentials: false,
     headers: {
